@@ -2,9 +2,12 @@ function Node(id) {
 	this.id = id;
 	this.edges = {};
 	this.distance = Infinity;
-
 	this.connect = function(i,l) {
 		this.edges[i] = parseInt(l);
+	}
+	this.draw = function(x,y) {
+		this.x = x;
+		this.y = y;
 	}
 }
 

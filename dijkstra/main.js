@@ -7,6 +7,11 @@ function init() {
 
 function SetNumberVertices(v) {
 	let verts = parseInt(v);
+	for(let i = 1; i < verts+1; i += 1) {
+		graph.AddNode(new Node(i));
+	}
+	BuildNodes();
+
 	console.log("number of vertices set to " + v);
 	let starts = document.getElementById("ChooseStart");
 	let ends = document.getElementById("ChooseEnd");
@@ -60,10 +65,6 @@ function AutoFill() {
 
 function BuildGraph() {
 	let v = table.rows.length-1;
-
-	for(let i = 1; i < v+1; i += 1) {
-		graph.AddNode(new Node(i));
-	}
 
 	for(let i = 1; i < v+1; i += 1) {
 		let n = graph.GetNode(i);
