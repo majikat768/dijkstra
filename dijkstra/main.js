@@ -1,7 +1,6 @@
 let table,graph;
 function init() {
 	table = document.getElementById('graphTable');
-	console.log(table);
 	graph = new Graph();
 }
 
@@ -28,17 +27,22 @@ function SetNumberVertices(v) {
 	headRow.insertCell(0);	
 
 	for(let i = 1; i < verts+1; i += 1) {
-		headRow.insertCell(i).innerHTML = i;
+		let col = headRow.insertCell(i);
+		col.innerHTML = i;
+		col.style.width = '40px';
+		col.style.height = '40px';
 		let newRow = table.insertRow(i);
 		let c = newRow.insertCell(0);
 		c.innerHTML = i;
 		for(let j = 1; j < verts+1; j += 1) {
 			let c = newRow.insertCell(j);
+			c.style.width = '40px';
+			c.style.height = '40px';
 			if(i < j) {
 				c.innerHTML = "<input type='text' size='1' class='edgeLen' value='-1'>";
 			}
 			else if(i == j){
-				c.innerHTML = 0;
+				c.innerHTML = '';
 			}
 		}
 	}
@@ -72,11 +76,15 @@ function BuildGraph() {
 			let cell = table.rows[i].cells[j];
 			let len = cell.getElementsByClassName('edgeLen')[0].value;
 			if(len != -1) {
-				n.connect(j,len);
+				n.AddEdge(j,len);
 				if(graph.GetNode(j) != -1) {
-					graph.GetNode(j).connect(n.id,len);
+					graph.GetNode(j).AddEdge(n.id,len);
 				}
 			}
+			cell.innerHTML = len;
+			cell.style.width = '40px';
+			cell.style.height = '40px';
+			table.rows[j].cells[i].innerHTML = len;
 		}
 	}
 	//graph.debug();
