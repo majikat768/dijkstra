@@ -30,7 +30,7 @@ function Graph(n) {
 		console.log("edges:");
 		for(let i = 0; i < this.nodes.length; i += 1) {
 			let n = this.nodes[i];
-			console.log(n.id + ": "); 
+			console.log("node " + n.id + ": "); 
 			console.log(n.edges);
 		}
 	}

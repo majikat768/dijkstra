@@ -1,7 +1,6 @@
 w = 800;
 h = 800;
 rad = w/2-20;
-console.log(rad);
 edges = [];
 function setup() {
 	let canvas = createCanvas(w,h);
@@ -32,7 +31,6 @@ function draw() {
 }
 
 function BuildNodes() {
-	console.log("building");
 	step = TWO_PI / graph.nodes.length;
 	for(let i = 0; i < graph.nodes.length; i += 1) {
 		let n = graph.nodes[i];
@@ -41,7 +39,6 @@ function BuildNodes() {
 			let x = w/2+rad*cos(theta);
 			let y = h/2+rad*sin(theta);
 			n.draw(x,y);
-			console.log(n.x);
 		}
 	}
 

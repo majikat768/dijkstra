@@ -51,8 +51,19 @@ Enter edge lengths.
 
 <div id="step4" style='display:none;'>
 starting at vertex <span id="startvert"></span>.
+<!--
+<p>
+Choose ending vertex.
+<br><select id="ChooseEnd"></select>
+<br><input type="submit" onclick="SetEndingVertex(document.getElementById('ChooseEnd').value)">
+</p>
+-->
 </div>
-
+<div id="step5" style='display:none;'>
+ending at vertex <span id="endvert"></span>.
+</div>
+<table id="pathTable" cellpadding=5 border=1>
+</table>
 </div>
 <div id="sketch" style="right:5px;position:fixed;"></div>
 </body>
