@@ -5,18 +5,16 @@
 <script type="text/javascript" src="../tableFunctions.js"></script>
 <script type="text/javascript" src="../headerFunction.js"></script>
 <script type="text/javascript" src="../pseudocodeFunctions.js"></script>
-<script type="text/javascript" src="graph.js"></script>
-<script type="text/javascript"  src="main.js"></script>
-<script type="text/javascript" src="p5.min.js"></script>
-<script type="text/javascript" src="display.js"></script>
-<script type="text/javascript" src="dijkstra.js"></script>
+<script type="text/javascript" src="/dijkstra/display.js"></script>
+<script type="text/javascript" src="/dijkstra/graph.js"></script>
+<script type="text/javascript" src="/dijkstra/dijkstra.js"></script>
+<link rel='stylesheet' href='/dijkstra/main.css' type='text/css' />
 </head>
 <body onload="init()">
 <p>
 <div id="body" style="position:absolute;">
 Number of vertices:
 <select id='numVertices'>
-<option>1</option>
 <option>2</option>
 <option>3</option>
 <option>4</option>
@@ -43,7 +41,7 @@ Enter edge lengths.
 </div>
 
 <div id="step3" style='display:none;'>
-<p>Choose starting vertex.
+<p>Choose a starting vertex or click on one to the right.
 <br><select id="ChooseStart"></select>
 <br><input type="submit" onclick="SetStartingVertex(document.getElementById('ChooseStart').value)">
 </p>
@@ -65,6 +63,11 @@ ending at vertex <span id="endvert"></span>.
 <table id="pathTable" cellpadding=5 border=1>
 </table>
 </div>
-<div id="sketch" style="right:5px;position:fixed;"></div>
+<div id="sketch-container">
+  <div id=sketch></div>
+  <h1 class='canvas-msg canvas-msg-1'>Chose a number of vertices.</h1>
+  <h1 class='canvas-msg canvas-msg-2'>Enter edge values.</h1>
+</div>
+<script type="text/javascript"  src="/dijkstra/main.js"></script>
 </body>
 </html>
