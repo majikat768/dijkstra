@@ -1,0 +1,4 @@
+1. When a node has been chosen as start highlight it in some way.
+2. When optimal path has been found, highlight the edges.
+3. Let user choose target node.
+4. Clear view button.
