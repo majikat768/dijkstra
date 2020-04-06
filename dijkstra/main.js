@@ -1,7 +1,21 @@
-let table,graph;
+var table,
+    graph,
+    display;
+
+window.addEventListener('resize', function() { 
+  display.draw({ graph: graph });
+});
+
 function init() {
 	table = document.getElementById('graphTable');
 	graph = new Graph();
+
+  display = new Display({ 
+    container: document.getElementById("sketch"),
+    msg1: document.querySelector(".canvas-msg-1"),
+    msg2: document.querySelector(".canvas-msg-2"),
+  });
+  display.draw();
 }
 
 function SetNumberVertices(v) {
@@ -9,7 +23,8 @@ function SetNumberVertices(v) {
 	for(let i = 0; i < verts; i += 1) {
 		graph.AddNode(new Node(i));
 	}
-	BuildNodes();
+
+  display.draw({ graph: graph })
 
 	console.log("number of vertices set to " + v);
 	let starts = document.getElementById("ChooseStart");
@@ -96,8 +111,9 @@ function BuildGraph() {
 			table.rows[j+1].cells[i+1].innerHTML = len;
 		}
 	}
-	//graph.debug();
-	BuildEdges();
+
+  display.draw({ graph: graph })
+
 	document.getElementById('step3').style.display = 'block';
 }
 
@@ -115,6 +131,7 @@ function SetStartingVertex(start) {
 	document.getElementById("step4").style.display = 'block';
 	document.getElementById("startvert").innerText = start;
 	let d = dijkstra(graph.GetNode(start));
+  console.log({d})
 }
 
 function SetEndingVertex(end) {
