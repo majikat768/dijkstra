@@ -192,7 +192,7 @@ class Display {
     clearTimeout(this.state.mouseTimeout);
     this.state.mouseTimeout = setTimeout(() => { 
       this.state.userTargetNode = targetNode;
-    }, 50);
+    }, 100);
   }
 
   _onMouseUp(event) { 
