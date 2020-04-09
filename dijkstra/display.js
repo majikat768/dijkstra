@@ -115,9 +115,10 @@ class Display {
         continue;
       }
 
+      let modifier = 3;
       let xDistance = a.x - b.x;
       let yDistance = a.y - b.y;
-      let sumOfRadii = a.r + b.r;
+      let sumOfRadii = a.r*modifier + b.r*modifier;
       let distanceSquared = xDistance * xDistance + yDistance * yDistance;
       let isOverlapping = distanceSquared  < sumOfRadii * sumOfRadii;
       if (isOverlapping) {
@@ -397,14 +398,16 @@ class Display {
     }
     else {
       for (let n of graph.nodes) {
+        let canvasNode;
+
         let createNode = () => {
           let r = width / graph.nodes.length * 0.2;
           let {x, y} = this._rand(r)
-          let c = this._randomColor();
+          let c = canvasNode ? canvasNode.c : this._randomColor();
           return {x, y, r, n, c};
         }
 
-        let canvasNode = createNode()
+        canvasNode = createNode()
         while (this._overlap(canvasNode)) {
           canvasNode = createNode()
         }
