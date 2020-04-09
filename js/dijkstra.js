@@ -31,57 +31,57 @@ function dijkstra(s) {
 
 	let iterations = 0;
 
-/*
-	while(queue.length() > 0) {
-		// pop nearest node.
-		let current = queue.pop();
+	/*
+	   while(queue.length() > 0) {
+	// pop nearest node.
+	let current = queue.pop();
 
-		// check every neighboring node of current.
-		console.log("checking neighbors of node " + current.id);
-		for(let neighborID in current.edges) {
-			console.log("checking neighbor " + neighborID);
-			let dist = distances[current.id] + current.edges[neighborID];
-			console.log("total distance from " + start.id + " to " + neighborID + " is " + dist);
-			// if new found distances is shorter,
-			// update it's distance and add it to the queue.
-			if(dist < distances[neighborID] ) {
-				let cellNo = parseInt(neighborID)+parseInt(1);
-				pathTable.rows[cellNo].cells[1].innerText = dist;
-				pathTable.rows[cellNo].cells[2].innerText = pathTable.rows[current.id+1].cells[2].innerText + "," + neighborID;
-				distances[neighborID] = dist;
-				queue.push(graph.GetNode(neighborID));
-			}
-		}
-		queue.print();
+	// check every neighboring node of current.
+	console.log("checking neighbors of node " + current.id);
+	for(let neighborID in current.edges) {
+	console.log("checking neighbor " + neighborID);
+	let dist = distances[current.id] + current.edges[neighborID];
+	console.log("total distance from " + start.id + " to " + neighborID + " is " + dist);
+	// if new found distances is shorter,
+	// update it's distance and add it to the queue.
+	if(dist < distances[neighborID] ) {
+	let cellNo = parseInt(neighborID)+parseInt(1);
+	pathTable.rows[cellNo].cells[1].innerText = dist;
+	pathTable.rows[cellNo].cells[2].innerText = pathTable.rows[current.id+1].cells[2].innerText + "," + neighborID;
+	distances[neighborID] = dist;
+	queue.push(graph.GetNode(neighborID));
 	}
-*/
+	}
+	queue.print();
+	}
+	 */
 }
 
 function TakeStep() {
-if(queue.length() <= 0)	return;
-		// pop nearest node.
-		let current = queue.pop();
+	if(queue.length() <= 0)	return;
+	// pop nearest node.
+	let current = queue.pop();
 
-		// check every neighboring node of current.
-		console.log("checking neighbors of node " + current.id);
-		for(let neighborID in current.edges) {
-			console.log("checking neighbor " + neighborID);
-			let dist = distances[current.id] + current.edges[neighborID];
-			console.log("total distance from " + start.id + " to " + neighborID + " is " + dist);
-			// if new found distances is shorter,
-			// update it's distance and add it to the queue.
-			if(dist < distances[neighborID] ) {
-				let cellNo = parseInt(neighborID)+parseInt(1);
-				pathTable.rows[cellNo].cells[1].innerText = dist;
-				pathTable.rows[cellNo].cells[2].innerText = pathTable.rows[current.id+1].cells[2].innerText + "," + neighborID;
-				distances[neighborID] = dist;
-				queue.push(graph.GetNode(neighborID));
-			}
+	// check every neighboring node of current.
+	console.log("checking neighbors of node " + current.id);
+	for(let neighborID in current.edges) {
+		console.log("checking neighbor " + neighborID);
+		let dist = distances[current.id] + current.edges[neighborID];
+		console.log("total distance from " + start.id + " to " + neighborID + " is " + dist);
+		// if new found distances is shorter,
+		// update it's distance and add it to the queue.
+		if(dist < distances[neighborID] ) {
+			let cellNo = parseInt(neighborID)+parseInt(1);
+			pathTable.rows[cellNo].cells[1].innerText = dist;
+			pathTable.rows[cellNo].cells[2].innerText = pathTable.rows[current.id+1].cells[2].innerText + "," + neighborID;
+			distances[neighborID] = dist;
+			queue.push(graph.GetNode(neighborID));
 		}
-		//queue.print();
-		if(queue.length() <= 0) {
-			document.getElementById("ContinueButton").value = "done!";
-		}
+	}
+	//queue.print();
+	if(queue.length() <= 0) {
+		document.getElementById("ContinueButton").value = "done!";
+	}
 }
 
 // not exactly a queue. more like a sorted stack.
@@ -125,14 +125,14 @@ function Queue() {
 	}
 
 	this.remove = function(node) {
-	for(let i = 0; i < this.set.length; i += 1) {
-		if(node.id == this.set[i].id) {
-			this.set.splice(i,1);
-			document.getElementById("queueTable").deleteRow(i+1);
-			return;
+		for(let i = 0; i < this.set.length; i += 1) {
+			if(node.id == this.set[i].id) {
+				this.set.splice(i,1);
+				document.getElementById("queueTable").deleteRow(i+1);
+				return;
+			}
 		}
 	}
-}
 
 	this.pop = function() {
 		console.log("popping " + this.set[0].id);

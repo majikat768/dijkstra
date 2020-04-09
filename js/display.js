@@ -75,6 +75,7 @@ class Display {
   _wipe() {
     if (this.state.el) {
       this.state.el.parentElement.removeChild(this.state.el);
+	  this.state.el = null;
     }
 
     if (!this.state.userTargetNode) {

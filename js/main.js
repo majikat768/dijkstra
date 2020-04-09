@@ -7,6 +7,23 @@ window.addEventListener('resize', function() {
   display.draw({ graph: graph });
 });
 
+function reset() {
+	display.reset();
+	graph = new Graph();
+	document.getElementById("graphTable").innerHTML = "";
+	document.getElementById("pathTable").innerHTML = "";
+	document.getElementById("queueTable").innerHTML = "";
+	document.getElementById("step2").style.display = "none";
+	document.getElementById("step3").style.display = "none";
+	for(var i = document.getElementById("ChooseStart").options.length-1; i >= 0; i--) {
+		document.getElementById("ChooseStart").remove(i);
+	}
+	document.getElementById("step4").style.display = "none";
+	document.getElementById("step5").style.display = "none";
+	document.getElementById("solutionTable").style.display = "none";
+	document.getElementById("ContinueButton").value = "continue";
+}
+
 function init() {
 	table = document.getElementById('graphTable');
 	graph = new Graph();
@@ -53,13 +70,15 @@ function SetNumberVertices(v) {
 
 	let pathTable = document.getElementById("pathTable");
 	pathTable.insertRow(0);
-	pathTable.rows[0].insertCell(0).innerHTML = "vertex";
-	pathTable.rows[0].insertCell(1).innerHTML = "distance";
-	pathTable.rows[0].insertCell(2).innerHTML = "path";
+	pathTable.rows[0].insertCell(0).innerHTML = "<b>vertex</b>";
+	pathTable.rows[0].insertCell(1).innerHTML = "<b>distance</b>";
+	pathTable.rows[0].insertCell(2).innerHTML = "<b>path</b>";
+	let queueTable = document.getElementById("queueTable");
+	queueTable.insertRow(0).insertCell(0).innerHTML = "Queue:";
 
 	for(let i = 0; i < verts; i += 1) {
 		let col = headRow.insertCell(i+1);
-		col.innerHTML = i;
+		col.innerHTML = "<b>" + i + "</b>";
 		pathTable.insertRow(i+1);
 		pathTable.rows[i+1].insertCell(0).innerHTML = i;
 		pathTable.rows[i+1].insertCell(1);
@@ -68,7 +87,7 @@ function SetNumberVertices(v) {
 		col.style.height = '40px';
 		let newRow = table.insertRow(i+1);
 		let c = newRow.insertCell(0);
-		c.innerHTML = i;
+		c.innerHTML = col.innerHTML;
 		for(let j = 0; j < verts; j += 1) {
 			let c = newRow.insertCell(j+1);
 			c.style.width = '40px';
