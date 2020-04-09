@@ -2,6 +2,7 @@ var table,
     graph,
     display;
 
+// Redraw canvas on resize event. 
 window.addEventListener('resize', function() { 
   display.draw({ graph: graph });
 });
@@ -14,6 +15,16 @@ function init() {
     container: document.getElementById("sketch"),
     msg1: document.querySelector(".canvas-msg-1"),
     msg2: document.querySelector(".canvas-msg-2"),
+    msg3: document.querySelector(".canvas-msg-3"),
+    msg4: document.querySelector(".canvas-msg-4"),
+    // Dependency injection so we can swap impl. later.
+    solver: function(startNode, endNode, ourGraph) {
+      let arrayOfNodeIDs = _solve(startNode, endNode, ourGraph);
+      return arrayOfNodeIDs // E.G. [0, 1, 2, 3] // Would imply there is an edge
+                                                 // from zero to one, from one
+                                                 // to two, and from two to
+                                                 // three.
+    }
   });
   display.draw();
 }
@@ -118,30 +129,20 @@ function BuildGraph() {
 }
 
 function SetStartingVertex(start) {
-/*
-	console.log("starting at: " + parseInt(start));
-	let ends = document.getElementById("ChooseEnd");
-	for(let i = 0; i < graph.nodes.length; i += 1) {
-		let opt = document.createElement("option");
-		opt.value = i;
-		opt.textContent = i;
-		ends.append(opt);
-	}
-*/
 	document.getElementById("step4").style.display = 'block';
 	document.getElementById("startvert").innerText = start;
 	let d = dijkstra(graph.GetNode(start));
-  console.log({d})
+  display.startNode(graph.GetNode(start));
 }
 
 function SetEndingVertex(end) {
 	console.log("ending at: " + parseInt(end));
 	document.getElementById("step5").style.display = 'block';
 	document.getElementById("endvert").innerText = end;
-console.log("starting at " + document.getElementById("startvert"));
+  console.log("starting at " + document.getElementById("startvert"));
 	let startnode = graph.GetNode(document.getElementById("startvert").innerText);
 	let endnode = graph.GetNode(document.getElementById("endvert").innerText);
 	let d = dijkstra(startnode,endnode);
-	
+  display.endNode(graph.GetNode(end));
 }
 
