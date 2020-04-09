@@ -37,5 +37,15 @@ canvas {
   font-size: 48px;
   line-height: 1.4;
   display: none;
+  margin: 15px 0 0;
+}
+
+h2.canvas-msg { 
+  font-size: 24px;
+}
+
+.canvas-top-msg { 
+  top: 0;
+  transform: translateX(-50%);
 }
 

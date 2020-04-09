@@ -1,4 +1,4 @@
-// ENUM
+// CONSTANTS
 
 const colors = [
   "#96ceb4",
@@ -33,21 +33,35 @@ function shuffle(array) {
 
 class Display { 
 
-  constructor({ container, msg1, msg2 }) {
+  constructor({ container, msg1, msg2, msg3, msg4, solver}) {
     this.state = { 
       el: void 0,
       nodes: [],
       lines: {},
       colors: [...colors],
+      startNode: void 0,
+      endNode: void 0,
+      winningPath: [],
+      currentGraph: void 0
     }
 
     this.props = {
       container,
       msg1, 
       msg2,
+      msg3, 
+      msg4,
+      solver
     }
 
     shuffle(this.state.colors);
+  }
+
+  reset() {
+    this.state.startNode = void 0;
+    this.state.endNode = void 0;
+    this.state.winningPath = [];
+    this._wipe();
   }
 
   _wipe() {
@@ -58,7 +72,14 @@ class Display {
     this.state.nodes = [];
     this.state.lines = {};
     this.state.colors = [...colors];
+    this.state.currentGraph = void 0;
+
     shuffle(this.state.colors);
+
+    this.props.msg1.style.display = 'block';
+    this.props.msg2.style.display = 'none';
+    this.props.msg3.style.display = 'none';
+    this.props.msg4.style.display = 'none';
   }
 
   _randomColor(){ 
@@ -122,17 +143,128 @@ class Display {
     let x = event.clientX - rect.left
     let y = event.clientY - rect.top
 
+    // Find the node we clicked.
     for (let n of this.state.nodes) {
-      let nx1 = n.x - (n.r/2);
-      let nx2 = n.x + (n.r/2);
-      let ny1 = n.y - (n.r/2);
-      let ny2 = n.y + (n.r/2);
-      if ((nx1 < x && x < nx2) && (ny1 < y && y < ny2))
-      {
-        // I've been clicked.
-        SetStartingVertex(n.n.id)
+      let nx1 = n.x - (n.r);
+      let nx2 = n.x + (n.r);
+      let ny1 = n.y - (n.r);
+      let ny2 = n.y + (n.r);
+
+      if ((nx1 < x && x < nx2) && (ny1 < y && y < ny2)) {
+
+        // Determine if we are click a start node or end node.
+        switch (true) {
+
+          case typeof this.state.startNode == "undefined": {
+            this.startNode(n.n, true);
+            break;
+          }
+
+          case typeof this.state.endNode == "undefined": {
+            if (n.n.id == this.state.startNode.id) {
+              alert("Cannot choose same node as both start and end node. " +
+                    "Press clear to choose a new start node.");
+              return;
+            }
+            this.endNode(n.n, true);
+            let path = this.props.solver(
+              this.state.startNode,
+              this.state.endNode,
+              this.state.currentGraph
+            );
+            this._drawSolved(path)
+            break;
+          }
+
+          default: {
+            // Do nothing.
+            break;
+          }
+
+        }
       }
     }
+  }
+
+  startNode(node, set) {
+    if (set) SetStartingVertex(node.id)
+    this.props.msg3.style.display = 'none';
+    this.props.msg4.style.display = 'block';
+    this.state.startNode = node;
+
+    let ctx = this.state.el.getContext("2d");
+    //
+    // Draw only this node.
+    for (let canvasNode of this.state.nodes) {
+      if (canvasNode.n.id === node.id) {
+        let circle = [0, 2*Math.PI];
+        let offset = 5;
+        ctx.beginPath();
+        ctx.arc(canvasNode.x, canvasNode.y, canvasNode.r, ...circle);
+        ctx.closePath();
+        ctx.fillStyle = canvasNode.c;
+        ctx.fill();
+        ctx.fillStyle = "black";
+        ctx.font = `${canvasNode.r * 0.5}px Arial`;
+        ctx.fillText(canvasNode.n.id, canvasNode.x-offset, canvasNode.y+offset);
+        // Border.
+        ctx.lineWidth = 30 / this.state.currentGraph.nodes.length;
+        ctx.strokeStyle = "blue";
+        ctx.stroke();
+      }
+    }
+  }
+
+  endNode(node, set) {
+    if (set) SetEndingVertex(node.id)
+    this.props.msg4.style.display = 'none';
+    this.state.endNode = node;
+  }
+
+  _drawSolved(path /* Array<String> */ ) {
+    this.state.winningPath = path;
+    let ctx = this.state.el.getContext("2d");
+
+    // Draw lines.
+    for (let n of this.state.currentGraph.nodes) {
+      n.id = n.id.toString() // TODO: This is very inconsistent. 
+      for (let id in n.edges) {
+        // This line is on optimal path. Draw it.
+        if (path.indexOf(n.id) != -1 &&
+            path.indexOf(n.id) + 1 == path.indexOf(id)) {
+          let a = this._getCenter(n.id)
+          let b = this._getCenter(id)
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y)
+          ctx.lineTo(b.x, b.y)
+          ctx.lineWidth = 30 / this.state.currentGraph.nodes.length;
+          ctx.strokeStyle = "blue";
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes.
+    for (let canvasNode of this.state.nodes) {
+      canvasNode.n.id = canvasNode.n.id.toString() // TODO: This is very inconsistent. 
+      if (path.indexOf(canvasNode.n.id) != -1) {
+        let circle = [0, 2*Math.PI];
+        let offset = 5;
+        ctx.beginPath();
+        ctx.arc(canvasNode.x, canvasNode.y, canvasNode.r, ...circle);
+        ctx.closePath();
+        ctx.fillStyle = canvasNode.c;
+        ctx.fill();
+        ctx.fillStyle = "black";
+        ctx.font = `${canvasNode.r * 0.5}px Arial`;
+        ctx.fillText(canvasNode.n.id, canvasNode.x-offset, canvasNode.y+offset);
+        // Border.
+        ctx.lineWidth = 30 / this.state.currentGraph.nodes.length;
+        ctx.strokeStyle = "blue";
+        ctx.stroke();
+      }
+    }
+
   }
 
   draw(props) {
@@ -141,9 +273,10 @@ class Display {
       this.props.msg1.style.display = 'block';
       return;
     }
-    this.props.msg1.style.display = 'none';
 
     this._wipe();
+    this.props.msg1.style.display = 'none';
+    this.state.currentGraph = props.graph;
 
     let el = document.createElement("canvas");
     this.props.container.appendChild(el);
@@ -233,8 +366,16 @@ class Display {
       ctx.fillText(canvasNode.n.id, canvasNode.x-offset, canvasNode.y+offset);
     }
 
-
     // Setup events.
     this.state.el.addEventListener('click', this._onClick.bind(this));
+
+    // Show user message, click to set start node.
+    this.props.msg3.style.display = 'block';
+
+    // Redraw winning path and nodes if applicable.
+    if (this.state.winningPath.length > 0) this._drawSolved(this.state.winningPath);
+    if (this.state.startNode) this.startNode(this.state.startNode);
+    if (this.state.endNode) this.endNode(this.state.endNode);
   }
 }
+
