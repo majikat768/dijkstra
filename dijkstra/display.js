@@ -42,7 +42,11 @@ class Display {
       startNode: void 0,
       endNode: void 0,
       winningPath: [],
-      currentGraph: void 0
+      currentGraph: void 0,
+      mouseTimeout: void 0,
+      mouseInterval: void 0,
+      userMouseDown: {x: 0, y: 0},
+      userTargetNode: void 0 // This is the node the user is dragging.
     }
 
     this.props = {
@@ -61,6 +65,10 @@ class Display {
     this.state.startNode = void 0;
     this.state.endNode = void 0;
     this.state.winningPath = [];
+    clearTimeout(this.state.mouseTimeout)
+    clearInterval(this.state.mouseInterval)
+    this.state.userMouseDown = {x: 0, y: 0};
+    this.state.userTargetNode = void 0;
     this._wipe();
   }
 
@@ -69,7 +77,10 @@ class Display {
       this.state.el.parentElement.removeChild(this.state.el);
     }
 
-    this.state.nodes = [];
+    if (!this.state.userTargetNode) {
+      this.state.nodes = []; 
+    }
+
     this.state.lines = {};
     this.state.colors = [...colors];
     this.state.currentGraph = void 0;
@@ -134,9 +145,76 @@ class Display {
     }
   }
 
-  _onClick(event) { 
+  _onMouseMove(event) { 
     event.preventDefault();
     event.stopPropagation();
+
+    if (this.state.userTargetNode) {
+      // Get user click position.
+      let rect = this.state.el.getBoundingClientRect()
+      let x = event.clientX - rect.left
+      let y = event.clientY - rect.top
+      this.state.userMouseDown = {x, y};
+
+      // Draw new node graph.
+      this.draw({ graph: this.state.currentGraph })
+    }
+  }
+
+  _onMouseDown(event) { 
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Get user click position.
+    let rect = this.state.el.getBoundingClientRect()
+    let x = event.clientX - rect.left
+    let y = event.clientY - rect.top
+    this.state.userMouseDown = {x, y};
+
+    let targetNode = void 0;
+
+    // Check if we're actually clicking a node.
+    for (let n of this.state.nodes) {
+      let nx1 = n.x - (n.r);
+      let nx2 = n.x + (n.r);
+      let ny1 = n.y - (n.r);
+      let ny2 = n.y + (n.r);
+
+      if ((nx1 < x && x < nx2) && (ny1 < y && y < ny2)) {
+        targetNode = n;
+      }
+    }
+
+    if (!targetNode) {
+      return;
+    }
+
+    clearTimeout(this.state.mouseTimeout);
+    this.state.mouseTimeout = setTimeout(() => { 
+      this.state.userTargetNode = targetNode;
+    }, 50);
+  }
+
+  _onMouseUp(event) { 
+    event.preventDefault();
+    event.stopPropagation();
+
+    clearTimeout(this.state.mouseTimeout);
+    clearInterval(this.state.mouseInterval);
+
+    if (this.state.userTargetNode) {
+      // Get user click position.
+      let rect = this.state.el.getBoundingClientRect()
+      let x = event.clientX - rect.left
+      let y = event.clientY - rect.top
+      this.state.userMouseDown = {x, y};
+
+      // Draw new node graph.
+      this.draw({ graph: this.state.currentGraph })
+
+      this.state.userTargetNode = void 0;
+      return
+    }
 
     // Get user click position.
     let rect = this.state.el.getBoundingClientRect()
@@ -193,7 +271,7 @@ class Display {
     this.state.startNode = node;
 
     let ctx = this.state.el.getContext("2d");
-    //
+
     // Draw only this node.
     for (let canvasNode of this.state.nodes) {
       if (canvasNode.n.id === node.id) {
@@ -306,20 +384,33 @@ class Display {
     this.props.msg2.style.display = 'none';
 
     // Create nodes. 
-    for (let n of graph.nodes) {
-      let createNode = () => {
-        let r = width / graph.nodes.length * 0.2;
-        let {x, y} = this._rand(r)
-        let c = this._randomColor();
-        return {x, y, r, n, c};
+    if (this.state.userTargetNode) {
+      // We're currently dragging a node, that means don't redraw the world,
+      // just update our single node.
+      for (let i = 0; i < this.state.nodes.length; i++) {
+        let n = this.state.nodes[i]
+        if (n.n.id == this.state.userTargetNode.n.id) { 
+          this.state.nodes[i].x = this.state.userMouseDown.x;
+          this.state.nodes[i].y = this.state.userMouseDown.y;
+        }
       }
+    }
+    else {
+      for (let n of graph.nodes) {
+        let createNode = () => {
+          let r = width / graph.nodes.length * 0.2;
+          let {x, y} = this._rand(r)
+          let c = this._randomColor();
+          return {x, y, r, n, c};
+        }
 
-      let canvasNode = createNode()
-      while (this._overlap(canvasNode)) {
-        canvasNode = createNode()
+        let canvasNode = createNode()
+        while (this._overlap(canvasNode)) {
+          canvasNode = createNode()
+        }
+
+        this.state.nodes.push(canvasNode)
       }
-
-      this.state.nodes.push(canvasNode)
     }
 
     // Draw lines.
@@ -348,6 +439,12 @@ class Display {
           ctx.lineTo(b.x, b.y)
           ctx.lineWidth = 20 / graph.nodes.length;
           ctx.stroke();
+
+          // Draw line weight
+          let r = width / graph.nodes.length * 0.2;
+          ctx.fillStyle = "blue";
+          ctx.font = `bold ${r * 0.6}px Arial`;
+          ctx.fillText(n.edges[id], (a.x+b.x)/2, (a.y+b.y)/2)
         }
       }
     }
@@ -367,7 +464,9 @@ class Display {
     }
 
     // Setup events.
-    this.state.el.addEventListener('click', this._onClick.bind(this));
+    this.state.el.addEventListener('mousemove', this._onMouseMove.bind(this));
+    this.state.el.addEventListener('mousedown', this._onMouseDown.bind(this));
+    this.state.el.addEventListener('mouseup', this._onMouseUp.bind(this));
 
     // Show user message, click to set start node.
     this.props.msg3.style.display = 'block';
@@ -378,4 +477,3 @@ class Display {
     if (this.state.endNode) this.endNode(this.state.endNode);
   }
 }
-
