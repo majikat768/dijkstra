@@ -2,8 +2,8 @@ var table,
     graph,
     display;
 
-// Redraw canvas on resize event. 
-window.addEventListener('resize', function() { 
+// Redraw canvas on resize event.
+window.addEventListener('resize', function() {
   display.draw({ graph: graph });
 });
 
@@ -11,7 +11,7 @@ function init() {
 	table = document.getElementById('graphTable');
 	graph = new Graph();
 
-  display = new Display({ 
+  display = new Display({
     container: document.getElementById("sketch"),
     msg1: document.querySelector(".canvas-msg-1"),
     msg2: document.querySelector(".canvas-msg-2"),
@@ -49,7 +49,7 @@ function SetNumberVertices(v) {
 	document.getElementById('step2').style.display = 'block';
 
 	let headRow = table.insertRow(0);
-	headRow.insertCell(0);	
+	headRow.insertCell(0);
 
 	let pathTable = document.getElementById("pathTable");
 	pathTable.insertRow(0);
@@ -146,4 +146,3 @@ function SetEndingVertex(end) {
 	let d = dijkstra(startnode,endnode);
   display.endNode(graph.GetNode(end));
 }
-
