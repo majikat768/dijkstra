@@ -17,15 +17,27 @@ function init() {
     msg2: document.querySelector(".canvas-msg-2"),
     msg3: document.querySelector(".canvas-msg-3"),
     msg4: document.querySelector(".canvas-msg-4"),
-    // Dependency injection so we can swap impl. later.
+    // Traverse table to get optimal path answer suitable for Display.
     solver: function(startNode, endNode, ourGraph) {
-      let arrayOfNodeIDs = _solve(startNode, endNode, ourGraph);
-      return arrayOfNodeIDs // E.G. [0, 1, 2, 3] // Would imply there is an edge
-                                                 // from zero to one, from one
-                                                 // to two, and from two to
-                                                 // three.
+      var rows = document.querySelectorAll('#pathTable > tbody > tr')
+      for (let i = 0; i < rows.length; i++) {
+        if (i < 1) {
+          continue;
+        }
+        let row = rows[i];
+        let cell = row.querySelector('td:last-of-type');
+        let parts = cell.textContent.trim().split(',')
+        let firstID = parts[0];
+        let lastID = parts[parts.length-1];
+        if (firstID == startNode.id.toString() &&
+            lastID  == endNode.id.toString()) {
+          return parts;
+        }
+      }
+      return [];
     }
   });
+
   display.draw();
 }
 
