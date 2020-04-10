@@ -31,10 +31,10 @@ function shuffle(array) {
 
 // IMPL.
 
-class Display {
+class Display { 
 
   constructor({ container, msg1, msg2, msg3, msg4, solver}) {
-    this.state = {
+    this.state = { 
       el: void 0,
       nodes: [],
       lines: {},
@@ -51,9 +51,9 @@ class Display {
 
     this.props = {
       container,
-      msg1,
+      msg1, 
       msg2,
-      msg3,
+      msg3, 
       msg4,
       solver
     }
@@ -75,11 +75,11 @@ class Display {
   _wipe() {
     if (this.state.el) {
       this.state.el.parentElement.removeChild(this.state.el);
-	  this.state.el = null;
+      this.state.el = void 0;
     }
 
     if (!this.state.userTargetNode) {
-      this.state.nodes = [];
+      this.state.nodes = []; 
     }
 
     this.state.lines = {};
@@ -94,7 +94,7 @@ class Display {
     this.props.msg4.style.display = 'none';
   }
 
-  _randomColor(){
+  _randomColor(){ 
     return this.state.colors.pop();
   }
 
@@ -102,7 +102,7 @@ class Display {
     for (let item of this.state.nodes) {
       let node = item.n;
       if (node.id == id) {
-        return {
+        return { 
           x: item.x,
           y: item.y,
         }
@@ -147,7 +147,7 @@ class Display {
     }
   }
 
-  _onMouseMove(event) {
+  _onMouseMove(event) { 
     event.preventDefault();
     event.stopPropagation();
 
@@ -163,7 +163,7 @@ class Display {
     }
   }
 
-  _onMouseDown(event) {
+  _onMouseDown(event) { 
     event.preventDefault();
     event.stopPropagation();
 
@@ -192,12 +192,12 @@ class Display {
     }
 
     clearTimeout(this.state.mouseTimeout);
-    this.state.mouseTimeout = setTimeout(() => {
+    this.state.mouseTimeout = setTimeout(() => { 
       this.state.userTargetNode = targetNode;
     }, 100);
   }
 
-  _onMouseUp(event) {
+  _onMouseUp(event) { 
     event.preventDefault();
     event.stopPropagation();
 
@@ -236,7 +236,7 @@ class Display {
         switch (true) {
 
           case typeof this.state.startNode == "undefined": {
-            this.startNode(n.n, true);
+            SetStartingVertex(n.n.id);
             break;
           }
 
@@ -246,13 +246,7 @@ class Display {
                     "Press clear to choose a new start node.");
               return;
             }
-            this.endNode(n.n, true);
-            let path = this.props.solver(
-              this.state.startNode,
-              this.state.endNode,
-              this.state.currentGraph
-            );
-            this._drawSolved(path)
+            SetEndingVertex(n.n.id);
             break;
           }
 
@@ -266,39 +260,19 @@ class Display {
     }
   }
 
-  startNode(node, set) {
-    if (set) SetStartingVertex(node.id)
+  startNode(node) {
+    this.state.userTargetNode = { n: { id: -1 } } // Fake it.
     this.props.msg3.style.display = 'none';
     this.props.msg4.style.display = 'block';
     this.state.startNode = node;
-
-    let ctx = this.state.el.getContext("2d");
-
-    // Draw only this node.
-    for (let canvasNode of this.state.nodes) {
-      if (canvasNode.n.id === node.id) {
-        let circle = [0, 2*Math.PI];
-        let offset = 5;
-        ctx.beginPath();
-        ctx.arc(canvasNode.x, canvasNode.y, canvasNode.r, ...circle);
-        ctx.closePath();
-        ctx.fillStyle = canvasNode.c;
-        ctx.fill();
-        ctx.fillStyle = "black";
-        ctx.font = `${canvasNode.r * 0.5}px Arial`;
-        ctx.fillText(canvasNode.n.id, canvasNode.x-offset, canvasNode.y+offset);
-        // Border.
-        ctx.lineWidth = 30 / this.state.currentGraph.nodes.length;
-        ctx.strokeStyle = "blue";
-        ctx.stroke();
-      }
-    }
+    this.draw({ graph: this.state.currentGraph });
   }
 
-  endNode(node, set) {
-    if (set) SetEndingVertex(node.id)
+  endNode(node) {
+    this.state.userTargetNode = { n: { id: -1 } } // Fake it.
     this.props.msg4.style.display = 'none';
     this.state.endNode = node;
+    this.draw({ graph: this.state.currentGraph });
   }
 
   _drawSolved(path /* Array<String> */ ) {
@@ -307,7 +281,7 @@ class Display {
 
     // Draw lines.
     for (let n of this.state.currentGraph.nodes) {
-      n.id = n.id.toString() // TODO: This is very inconsistent.
+      n.id = n.id.toString() // TODO: This is very inconsistent. 
       for (let id in n.edges) {
         // This line is on optimal path. Draw it.
         if (path.indexOf(n.id) != -1 &&
@@ -326,7 +300,7 @@ class Display {
 
     // Draw nodes.
     for (let canvasNode of this.state.nodes) {
-      canvasNode.n.id = canvasNode.n.id.toString() // TODO: This is very inconsistent.
+      canvasNode.n.id = canvasNode.n.id.toString() // TODO: This is very inconsistent. 
       if (path.indexOf(canvasNode.n.id) != -1) {
         let circle = [0, 2*Math.PI];
         let offset = 5;
@@ -361,7 +335,7 @@ class Display {
     let el = document.createElement("canvas");
     this.props.container.appendChild(el);
     this.state.el = el;
-
+    
     let ctx = el.getContext("2d");
     let width = ctx.canvas.height = this.props.container.offsetHeight;
     let height = ctx.canvas.width = this.props.container.offsetWidth;
@@ -385,13 +359,13 @@ class Display {
     }
     this.props.msg2.style.display = 'none';
 
-    // Create nodes.
+    // Create nodes. 
     if (this.state.userTargetNode) {
       // We're currently dragging a node, that means don't redraw the world,
       // just update our single node.
       for (let i = 0; i < this.state.nodes.length; i++) {
         let n = this.state.nodes[i]
-        if (n.n.id == this.state.userTargetNode.n.id) {
+        if (n.n.id == this.state.userTargetNode.n.id) { 
           this.state.nodes[i].x = this.state.userMouseDown.x;
           this.state.nodes[i].y = this.state.userMouseDown.y;
         }
@@ -431,7 +405,7 @@ class Display {
         }
 
         if (!this.state.lines[n.id][id]) {
-          // Draw the line! It's currently not on screen.
+          // Draw the line! It's currently not on screen. 
           this.state.lines[n.id][id] = true; // Don't draw the same line twice.
           this.state.lines[id][n.id] = true;
 
@@ -465,6 +439,14 @@ class Display {
       ctx.fillStyle = "black";
       ctx.font = `${canvasNode.r * 0.5}px Arial`;
       ctx.fillText(canvasNode.n.id, canvasNode.x-offset, canvasNode.y+offset);
+
+      if ((this.state.startNode && canvasNode.n.id.toString() == this.state.startNode.id.toString()) || 
+          (this.state.endNode && canvasNode.n.id.toString() == this.state.endNode.id.toString())) {
+        // Border.
+        ctx.lineWidth = 30 / this.state.currentGraph.nodes.length;
+        ctx.strokeStyle = "blue";
+        ctx.stroke();
+      }
     }
 
     // Setup events.
@@ -472,12 +454,14 @@ class Display {
     this.state.el.addEventListener('mousedown', this._onMouseDown.bind(this));
     this.state.el.addEventListener('mouseup', this._onMouseUp.bind(this));
 
-    // Show user message, click to set start node.
-    this.props.msg3.style.display = 'block';
+    if (!this.state.startNode) {
+      this.props.msg3.style.display = 'block';
+    }
+    else if (!this.state.endNode) {
+      this.props.msg4.style.display = 'block';
+    }
 
-    // Redraw winning path and nodes if applicable.
-    if (this.state.winningPath.length > 0) this._drawSolved(this.state.winningPath);
-    if (this.state.startNode) this.startNode(this.state.startNode);
-    if (this.state.endNode) this.endNode(this.state.endNode);
+    // // Redraw winning path and nodes if applicable.
+    // if (this.state.winningPath.length > 0) this._drawSolved(this.state.winningPath);
   }
 }

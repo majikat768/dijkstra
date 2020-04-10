@@ -28,21 +28,33 @@ function init() {
 	table = document.getElementById('graphTable');
 	graph = new Graph();
 
-  display = new Display({
+  display = new Display({ 
     container: document.getElementById("sketch"),
     msg1: document.querySelector(".canvas-msg-1"),
     msg2: document.querySelector(".canvas-msg-2"),
     msg3: document.querySelector(".canvas-msg-3"),
     msg4: document.querySelector(".canvas-msg-4"),
-    // Dependency injection so we can swap impl. later.
+    // Traverse table to get optimal path answer suitable for Display.
     solver: function(startNode, endNode, ourGraph) {
-      let arrayOfNodeIDs = _solve(startNode, endNode, ourGraph);
-      return arrayOfNodeIDs // E.G. [0, 1, 2, 3] // Would imply there is an edge
-                                                 // from zero to one, from one
-                                                 // to two, and from two to
-                                                 // three.
+      var rows = document.querySelectorAll('#pathTable > tbody > tr')
+      for (let i = 0; i < rows.length; i++) {
+        if (i < 1) {
+          continue;
+        }
+        let row = rows[i];
+        let cell = row.querySelector('td:last-of-type');
+        let parts = cell.textContent.trim().split(',')
+        let firstID = parts[0];
+        let lastID = parts[parts.length-1];
+        if (firstID == startNode.id.toString() &&
+            lastID  == endNode.id.toString()) {
+          return parts;
+        }
+      }
+      return [];
     }
   });
+
   display.draw();
 }
 
@@ -148,20 +160,22 @@ function BuildGraph() {
 }
 
 function SetStartingVertex(start) {
+  let node = graph.GetNode(start);
 	document.getElementById("step4").style.display = 'block';
 	document.getElementById("startvert").innerText = start;
 	document.getElementById("solutionTable").style.display = 'block';
-	let d = dijkstra(graph.GetNode(start));
-  display.startNode(graph.GetNode(start));
+  display.startNode(node);
+	let d = dijkstra(node);
 }
 
 function SetEndingVertex(end) {
+  let node = graph.GetNode(end);
 	console.log("ending at: " + parseInt(end));
 	document.getElementById("step5").style.display = 'block';
 	document.getElementById("endvert").innerText = end;
   console.log("starting at " + document.getElementById("startvert"));
 	let startnode = graph.GetNode(document.getElementById("startvert").innerText);
 	let endnode = graph.GetNode(document.getElementById("endvert").innerText);
-	let d = dijkstra(startnode,endnode);
-  display.endNode(graph.GetNode(end));
+  display.endNode(node);
+	let d = dijkstra(node);
 }
