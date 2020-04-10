@@ -162,6 +162,7 @@ function BuildGraph() {
 function SetStartingVertex(start) {
   let node = graph.GetNode(start);
 	document.getElementById("step4").style.display = 'block';
+	document.getElementById("QueuePopper").style.display = 'block';
 	document.getElementById("startvert").innerText = start;
 	document.getElementById("solutionTable").style.display = 'block';
   display.startNode(node);
