@@ -49,8 +49,12 @@
   </p>
   </div>
   <div id="step4" style='display:none;'>
-  <input type="submit" onclick="TakeStep()" value="continue" id="ContinueButton">
+  <input type="submit" onclick="GetNextNode()" value="Pop next node" id="QueuePopper" style="display:none;">
+  <input type="submit" onclick="CheckEdge()" value="Check edges" id="EdgeChecker" style="display:none;">
+  <input type="submit" onclick="TakeStep()" value="continue" id="ContinueButton" style="display:none;">
   starting at vertex <span id="startvert"></span>.
+  <div id="CurrentNodeStatus"></div>
+  <div id="EdgesStatus"></div>
   <!--
   <p>
   Choose ending vertex.
