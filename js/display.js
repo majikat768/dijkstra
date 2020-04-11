@@ -33,7 +33,7 @@ function shuffle(array) {
 
 class Display { 
 
-  constructor({ container, msg1, msg2, msg3, msg4, solver}) {
+  constructor({ container, msg1, msg2, msg3, msg4 }) {
     this.state = { 
       el: void 0,
       nodes: [],
@@ -54,8 +54,7 @@ class Display {
       msg1, 
       msg2,
       msg3, 
-      msg4,
-      solver
+      msg4
     }
 
     shuffle(this.state.colors);
@@ -240,15 +239,15 @@ class Display {
             break;
           }
 
-          case typeof this.state.endNode == "undefined": {
-            if (n.n.id == this.state.startNode.id) {
-              alert("Cannot choose same node as both start and end node. " +
-                    "Press clear to choose a new start node.");
-              return;
-            }
-            SetEndingVertex(n.n.id);
-            break;
-          }
+          // case typeof this.state.endNode == "undefined": {
+          //   if (n.n.id == this.state.startNode.id) {
+          //     alert("Cannot choose same node as both start and end node. " +
+          //           "Press clear to choose a new start node.");
+          //     return;
+          //   }
+          //   SetEndingVertex(n.n.id);
+          //   break;
+          // }
 
           default: {
             // Do nothing.
@@ -268,40 +267,63 @@ class Display {
     this.draw({ graph: this.state.currentGraph });
   }
 
-  endNode(node) {
-    this.state.userTargetNode = { n: { id: -1 } } // Fake it.
-    this.props.msg4.style.display = 'none';
-    this.state.endNode = node;
+  // endNode(node) {
+  //   this.state.userTargetNode = { n: { id: -1 } } // Fake it.
+  //   this.props.msg4.style.display = 'none';
+  //   this.state.endNode = node;
+  //   this.draw({ graph: this.state.currentGraph });
+  // }
+
+  drawConsideredEdge() {
+    let list = [];
+    for (let arg of arguments) {
+      list.push(arg.toString()) // Because sometimes these are strings and sometime not.
+    }
+    this.state.winningPath = list;
+    this.state.userTargetNode = { n: { id: -1 } } // Fake it. 
     this.draw({ graph: this.state.currentGraph });
+    this.state.userTargetNode = void 0;
   }
 
-  _drawSolved(path /* Array<String> */ ) {
+  _drawConsideredLines(path) {
     this.state.winningPath = path;
     let ctx = this.state.el.getContext("2d");
+    let width = ctx.canvas.height;
+    let height = ctx.canvas.width;
+    let graph = this.state.currentGraph;
 
     // Draw lines.
     for (let n of this.state.currentGraph.nodes) {
-      n.id = n.id.toString() // TODO: This is very inconsistent. 
       for (let id in n.edges) {
         // This line is on optimal path. Draw it.
-        if (path.indexOf(n.id) != -1 &&
-            path.indexOf(n.id) + 1 == path.indexOf(id)) {
+        if (path.indexOf(n.id.toString()) != -1 &&
+            path.indexOf(n.id.toString()) + 1 == path.indexOf(id.toString())) {
           let a = this._getCenter(n.id)
           let b = this._getCenter(id)
           ctx.beginPath();
           ctx.moveTo(a.x, a.y)
           ctx.lineTo(b.x, b.y)
           ctx.lineWidth = 30 / this.state.currentGraph.nodes.length;
-          ctx.strokeStyle = "blue";
+          ctx.strokeStyle = "red";
           ctx.stroke();
+
+          // Draw line weight
+          let r = width / graph.nodes.length * 0.2;
+          ctx.fillStyle = "red";
+          ctx.font = `bold ${r * 0.6}px Arial`;
+          ctx.fillText(n.edges[id], (a.x+b.x)/2, (a.y+b.y)/2)
         }
       }
     }
+  }
+
+  _drawConsideredNodes(path) {
+    this.state.winningPath = path;
+    let ctx = this.state.el.getContext("2d");
 
     // Draw nodes.
     for (let canvasNode of this.state.nodes) {
-      canvasNode.n.id = canvasNode.n.id.toString() // TODO: This is very inconsistent. 
-      if (path.indexOf(canvasNode.n.id) != -1) {
+      if (path.indexOf(canvasNode.n.id.toString()) != -1) {
         let circle = [0, 2*Math.PI];
         let offset = 5;
         ctx.beginPath();
@@ -314,11 +336,10 @@ class Display {
         ctx.fillText(canvasNode.n.id, canvasNode.x-offset, canvasNode.y+offset);
         // Border.
         ctx.lineWidth = 30 / this.state.currentGraph.nodes.length;
-        ctx.strokeStyle = "blue";
+        ctx.strokeStyle = "red";
         ctx.stroke();
       }
     }
-
   }
 
   draw(props) {
@@ -427,6 +448,9 @@ class Display {
       }
     }
 
+    // Redraw winning path and nodes if applicable.
+    if (this.state.winningPath.length > 0) this._drawConsideredLines(this.state.winningPath);
+
     // Draw nodes.
     for (let canvasNode of this.state.nodes) {
       let circle = [0, 2*Math.PI];
@@ -441,13 +465,17 @@ class Display {
       ctx.fillText(canvasNode.n.id, canvasNode.x-offset, canvasNode.y+offset);
 
       if ((this.state.startNode && canvasNode.n.id.toString() == this.state.startNode.id.toString()) || 
-          (this.state.endNode && canvasNode.n.id.toString() == this.state.endNode.id.toString())) {
+          /* (this.state.endNode && canvasNode.n.id.toString() == this.state.endNode.id.toString()) */
+          false ) {
         // Border.
         ctx.lineWidth = 30 / this.state.currentGraph.nodes.length;
         ctx.strokeStyle = "blue";
         ctx.stroke();
       }
     }
+
+    // Redraw winning path and nodes if applicable.
+    if (this.state.winningPath.length > 0) this._drawConsideredNodes(this.state.winningPath);
 
     // Setup events.
     this.state.el.addEventListener('mousemove', this._onMouseMove.bind(this));
@@ -457,11 +485,8 @@ class Display {
     if (!this.state.startNode) {
       this.props.msg3.style.display = 'block';
     }
-    else if (!this.state.endNode) {
-      this.props.msg4.style.display = 'block';
-    }
-
-    // // Redraw winning path and nodes if applicable.
-    // if (this.state.winningPath.length > 0) this._drawSolved(this.state.winningPath);
+    // else if (!this.state.endNode) {
+    //   this.props.msg4.style.display = 'block';
+    // }
   }
 }

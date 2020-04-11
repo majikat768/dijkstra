@@ -1,4 +1,7 @@
 X 1. When a node has been chosen as start highlight it in some way.
 X 2. When optimal path has been found, highlight the edges.
 X 3. Let user choose target node.
-4. Clear view button.
+X 4. Clear view button.
+
+BUG 
+1. if start node has no edges errors are encountered in dijkstra.js

@@ -87,6 +87,7 @@ function GetNextNode() {
 		currentEdges.push(id);
 	}
 	console.log(currentEdges);
+  display.drawConsideredEdge();
 	document.getElementById("CurrentNodeStatus").innerHTML = "Current node: " + current.id;
 	document.getElementById("EdgesStatus").innerHTML = "Edges:";
 }
@@ -106,6 +107,7 @@ function CheckEdge() {
 	console.log("checking neighbor " + neighborID);
 	let dist = distances[current.id] + current.edges[neighborID];
 	console.log("total distance from " + start.id + " to " + neighborID + " is " + dist);
+  display.drawConsideredEdge(current.id, neighborID)
 	// if new found distances is shorter,
 	// update it's distance and add it to the queue.
 	if(dist < distances[neighborID] ) {
