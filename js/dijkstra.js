@@ -73,6 +73,7 @@ function GetNextNode() {
 	ResetColors();
 	if(queue.length() <= 0)	{
 		document.getElementById("CurrentNodeStatus").innerHTML = "done!";
+    display.drawConsideredEdge();
 		document.getElementById("EdgesStatus").innerHTML = "";
 		return;
 	}
@@ -146,6 +147,7 @@ function CheckEdges() {
 	//queue.print();
 	if(queue.length() <= 0) {
 		document.getElementById("ContinueButton").value = "done!";
+    display.drawConsideredEdge();
 	}
 
 	document.getElementById("QueuePopper").style.display = "block";
@@ -176,6 +178,7 @@ function TakeStep() {
 	//queue.print();
 	if(queue.length() <= 0) {
 		document.getElementById("ContinueButton").value = "done!";
+    display.drawConsideredEdge();
 	}
 }
 
