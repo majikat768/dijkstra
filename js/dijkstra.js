@@ -73,8 +73,10 @@ function GetNextNode() {
 	ResetColors();
 	if(queue.length() <= 0)	{
 		document.getElementById("CurrentNodeStatus").innerHTML = "done!";
-    display.drawConsideredEdge();
+		display.drawConsideredEdge();
 		document.getElementById("EdgesStatus").innerHTML = "";
+		document.getElementById("QueuePopper").style.display = "none";
+		document.getElementById("EdgeChecker").style.display = "none";
 		return;
 	}
 	if(current != null)
