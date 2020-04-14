@@ -37,6 +37,8 @@ function init() {
   });
 
   display.draw();
+  var summary = document.getElementById("summary").innerText;
+  sayIt(summary);
 }
 
 function SetNumberVertices(v) {
