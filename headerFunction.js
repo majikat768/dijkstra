@@ -23,7 +23,7 @@ function createHeader(pageTitle) {
   cellContent = document.createElement('a');
   cellContent.href = "https://www.uidaho.edu/engr/our-people/julie-beeston";
   img = document.createElement('img');
-  img.src = "../images/drbc.gif";
+  img.src = "https://webpages.uidaho.edu/drbc/images/drbc.gif";
   img.style["width"] = "100%";
   cellContent.style["width"] = "100%";
   cellContent.appendChild(img); 
@@ -57,7 +57,7 @@ function createHeader(pageTitle) {
   cellContent = document.createElement('a');
   cellContent.href = "https://www.uidaho.edu/";
   img = document.createElement('img');
-  img.src = "../images/julie-beeston.jpg";
+  img.src = "https://webpages.uidaho.edu/drbc/images/julie-beeston.jpg";
   img.style["width"] = "100%";
   cellContent.style["width"] = "100%";
   cellContent.appendChild(img); 

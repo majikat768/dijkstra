@@ -17,7 +17,7 @@ function dijkstra(s) {
 	// queue is a sorted list of nodes with path discovered,
 	// but haven't yet checked their neighbors yet.
 	queue = new Queue();
-	console.log("starting at " + start.id);
+	logger.do("starting at node " + start.id);
 
 	// set distance of every vertex to Infinity.
 	for(let i = 0; i < graph.nodes.length; i += 1) {
@@ -43,11 +43,11 @@ function dijkstra(s) {
 	let current = queue.pop();
 
 	// check every neighboring node of current.
-	console.log("checking neighbors of node " + current.id);
+	logger.do("checking neighbors of node " + current.id);
 	for(let neighborID in current.edges) {
-	console.log("checking neighbor " + neighborID);
+	logger.do("checking neighbor node " + neighborID);
 	let dist = distances[current.id] + current.edges[neighborID];
-	console.log("total distance from " + start.id + " to " + neighborID + " is " + dist);
+	logger.do("total distance from node " + start.id + " to node " + neighborID + " is " + dist);
 	// if new found distances is shorter,
 	// update it's distance and add it to the queue.
 	if(dist < distances[neighborID] ) {
@@ -89,7 +89,6 @@ function GetNextNode() {
 	for(let id in current.edges) {
 		currentEdges.push(id);
 	}
-	console.log(currentEdges);
   display.drawConsideredEdge();
 	document.getElementById("CurrentNodeStatus").innerHTML = "Current node: " + current.id;
 	document.getElementById("EdgesStatus").innerHTML = "Edges:";
@@ -107,13 +106,14 @@ function CheckEdge() {
 	let neighborID = currentEdges.shift();
 	document.getElementById("EdgesStatus").innerHTML += ", " + neighborID;
 	ColorCell(graph.GetNode(neighborID),"cyan");
-	console.log("checking neighbor " + neighborID);
+	logger.do("checking neighbor node " + neighborID);
 	let dist = distances[current.id] + current.edges[neighborID];
-	console.log("total distance from " + start.id + " to " + neighborID + " is " + dist);
+	logger.do("total distance from node " + start.id + " to node " + neighborID + " is " + dist);
   display.drawConsideredEdge(current.id, neighborID)
 	// if new found distances is shorter,
 	// update it's distance and add it to the queue.
 	if(dist < distances[neighborID] ) {
+    if (distances[neighborID] != Infinity) logger.do("distance found has lower value, updating distance from " + start.id + " to " + neighborID)
 		let cellNo = parseInt(neighborID)+parseInt(1);
 		pathTable.rows[cellNo].cells[1].innerText = dist;
 		pathTable.rows[cellNo].cells[2].innerText = pathTable.rows[current.id+1].cells[2].innerText + "," + neighborID;
@@ -130,15 +130,16 @@ function CheckEdge() {
 
 function CheckEdges() {
 	// check every neighboring node of current.
-	console.log("checking neighbors of node " + current.id);
+	logger.do("checking neighbors of node " + current.id);
 	for(let neighborID in current.edges) {
 		ColorCell(graph.GetNode(neighborID),"cyan");
-		console.log("checking neighbor " + neighborID);
+		logger.do("checking neighbor node " + neighborID);
 		let dist = distances[current.id] + current.edges[neighborID];
-		console.log("total distance from " + start.id + " to " + neighborID + " is " + dist);
+		logger.do("total distance from node " + start.id + " to node " + neighborID + " is " + dist);
 		// if new found distances is shorter,
 		// update it's distance and add it to the queue.
 		if(dist < distances[neighborID] ) {
+      if (distances[neighborID] != Infinity) logger.do("distance found has lower value, updating distance from " + start.id + " to " + neighborID)
 			let cellNo = parseInt(neighborID)+parseInt(1);
 			pathTable.rows[cellNo].cells[1].innerText = dist;
 			pathTable.rows[cellNo].cells[2].innerText = pathTable.rows[current.id+1].cells[2].innerText + "," + neighborID;
@@ -148,6 +149,7 @@ function CheckEdges() {
 	}
 	//queue.print();
 	if(queue.length() <= 0) {
+    logger.do("all path distances have now been computed");
 		document.getElementById("ContinueButton").value = "done!";
     display.drawConsideredEdge();
 	}
@@ -162,14 +164,15 @@ function TakeStep() {
 	current = queue.pop();
 
 	// check every neighboring node of current.
-	console.log("checking neighbors of node " + current.id);
+	logger.do("checking neighbors of node " + current.id);
 	for(let neighborID in current.edges) {
-		console.log("checking neighbor " + neighborID);
+		logger.do("checking neighbor node " + neighborID);
 		let dist = distances[current.id] + current.edges[neighborID];
-		console.log("total distance from " + start.id + " to " + neighborID + " is " + dist);
+		logger.do("total distance from node " + start.id + " to node " + neighborID + " is " + dist);
 		// if new found distances is shorter,
 		// update it's distance and add it to the queue.
 		if(dist < distances[neighborID] ) {
+      if (distances[neighborID] != Infinity) logger.do("distance found has lower value, updating distance from " + start.id + " to " + neighborID)
 			let cellNo = parseInt(neighborID)+parseInt(1);
 			pathTable.rows[cellNo].cells[1].innerText = dist;
 			pathTable.rows[cellNo].cells[2].innerText = pathTable.rows[current.id+1].cells[2].innerText + "," + neighborID;
@@ -209,7 +212,7 @@ function Queue() {
 		for(let i = 0; i < this.set.length; i += 1) {
 			if(distances[node.id] <= distances[this.set[i].id]) {
 				if(node.id != this.set[i].id) {
-					console.log("added node " + node.id + " to queue at index " + i);
+					logger.do("added node " + node.id + " to queue at index " + i);
 					this.set.splice(i,0,node);
 					document.getElementById("queueTable").insertRow(i+1).insertCell(0).innerHTML = node.id;
 				}
@@ -218,7 +221,7 @@ function Queue() {
 			}
 		}
 		if(!added) {
-			console.log("added node " + node.id + " to end of queue");
+			logger.do("added node " + node.id + " to end of queue");
 			this.set.push(node);
 			document.getElementById("queueTable").insertRow(this.set.length).insertCell(0).innerHTML = node.id;
 		}
@@ -235,15 +238,14 @@ function Queue() {
 	}
 
 	this.pop = function() {
-		console.log("popping " + this.set[0].id);
+		logger.do("popping node " + this.set[0].id + " from queue");
 		document.getElementById("queueTable").deleteRow(1);
 		return this.set.shift();
 	}
 
 	this.print = function() {
-		console.log("queue:");
 		for(let i = 0; i < this.set.length; i += 1) {
-			console.log("node " + this.set[i].id + " distance " + distances[this.set[i].id]);
+			logger.do("node " + this.set[i].id + "'s distance is " + distances[this.set[i].id]);
 		}
 	}
 

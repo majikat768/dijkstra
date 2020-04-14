@@ -1,6 +1,7 @@
 var table,
     graph,
-    display;
+    display,
+    logger;
 
 // Redraw canvas on resize event.
 window.addEventListener('resize', function() {
@@ -25,7 +26,10 @@ function reset() {
 }
 
 function init() {
+  logger = new Log({ say: function() { sayIt.apply(this, arguments); } });
+
 	table = document.getElementById('graphTable');
+
 	graph = new Graph();
 
   display = new Display({ 
@@ -33,7 +37,7 @@ function init() {
     msg1: document.querySelector(".canvas-msg-1"),
     msg2: document.querySelector(".canvas-msg-2"),
     msg3: document.querySelector(".canvas-msg-3"),
-    msg4: document.querySelector(".canvas-msg-4"),
+    msg4: document.querySelector(".canvas-msg-4")
   });
 
   display.draw();
