@@ -132,6 +132,7 @@ class Display {
   _rand(radius) {
     let ctx = this.state.el.getContext("2d");
     let { width, height } = ctx.canvas;
+    let yoffset = 50;
     return {
       x: (() => {
         let max = width - radius;
@@ -140,7 +141,7 @@ class Display {
       })(),
       y: (() => {
         let max = height - radius;
-        let min = 0 + radius;
+        let min = 0 + radius + yoffset;
         return Math.floor(Math.random()*(max-min+1)+min);
       })(),
     }
