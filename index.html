@@ -34,7 +34,7 @@
     <option>9</option>
     <option>10</option>
     </select>
-    <input type="submit" onclick="SetNumberVertices(document.getElementById('numVertices').value)">
+    <input id="SetNumberOfVerticesBtn" type="submit" onclick="SetNumberVertices(document.getElementById('numVertices').value)">
     </p>
     
     
@@ -45,14 +45,14 @@
     </p>
     <table id="graphTable" cellpadding=5 border=1>
     </table>
-    <br><input type="submit" onclick="AutoFill()" value='Auto fill'></input>
+    <br><input id="AutoFillBtn" type="submit" onclick="AutoFill()" value='Auto fill'></input>
     <br><input id="BuildGraphBtn" disabled type="submit" onclick="BuildGraph()" value='continue'></input>
     </div>
     
     <div id="step3" style='display:none;'>
     <p>Choose a starting vertex or click on one to the right.
     <br><select id="ChooseStart"></select>
-    <br><input type="submit" onclick="SetStartingVertex(document.getElementById('ChooseStart').value)">
+    <br><input id="ChooseStartBtn" type="submit" onclick="SetStartingVertex(document.getElementById('ChooseStart').value)">
     </p>
     </div>
     <div id="step4" style='display:none;'>

@@ -9,6 +9,9 @@ window.addEventListener('resize', function() {
 });
 
 function reset() {
+  document.getElementById("ChooseStartBtn").disabled = false;
+  document.getElementById("SetNumberOfVerticesBtn").disabled = false;
+  document.getElementById("AutoFillBtn").disabled = false;
   document.getElementById("BuildGraphBtn").disabled = true;
 	display.reset();
 	graph = new Graph();
@@ -53,6 +56,7 @@ function SetNumberVertices(v) {
 	}
 
   display.draw({ graph: graph })
+  document.getElementById("SetNumberOfVerticesBtn").disabled = true; // User has to press reset. Avoid graph/canvas bugs.
 
 	console.log("number of vertices set to " + v);
 	let starts = document.getElementById("ChooseStart");
@@ -153,6 +157,9 @@ function AutoFill() {
 function BuildGraph() {
 	let v = table.rows.length-1;
 
+  document.getElementById("AutoFillBtn").disabled = true;
+  document.getElementById("BuildGraphBtn").disabled = true;
+
 	for(let i = 0; i < v; i += 1) {
 		let n = graph.GetNode(i);
 		for(let j = i+1; j < v; j += 1) {
@@ -178,6 +185,7 @@ function BuildGraph() {
 
 function SetStartingVertex(start) {
   let node = graph.GetNode(start);
+  document.getElementById("ChooseStartBtn").disabled = true;
 	document.getElementById("step4").style.display = 'block';
 	document.getElementById("QueuePopper").style.display = 'block';
 	document.getElementById("startvert").innerText = start;
