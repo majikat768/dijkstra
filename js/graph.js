@@ -9,6 +9,7 @@ function Node(id) {
 	// dictionaries in js can't store data objects as keys
 	// so store the node's id instead
 	this.AddEdge = function(i,l) {
+    if (isNaN(parseInt(l))) return; // Don't let nans get added to graph.
 		this.edges[i] = parseInt(l);
 	}
 

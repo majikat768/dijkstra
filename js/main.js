@@ -9,6 +9,7 @@ window.addEventListener('resize', function() {
 });
 
 function reset() {
+  document.getElementById("BuildGraphBtn").disabled = true;
 	display.reset();
 	graph = new Graph();
 	document.getElementById("graphTable").innerHTML = "";
@@ -99,10 +100,39 @@ function SetNumberVertices(v) {
 			}
 		}
 	}
+
+
+  var lenInputs = document.querySelectorAll(".edgeLen");
+  for (var i = 0; i < lenInputs.length; i++) {
+    (function(el) { 
+      el.addEventListener('change', onChange);
+      el.addEventListener('input', onChange);
+    })(lenInputs[i]);
+  }
+
+  function onChange(event) { 
+    console.log("here");
+    document.getElementById("BuildGraphBtn").disabled = !hasAnyValue();
+  }
+
+  function hasAnyValue() {
+    for (var i = 0; i < lenInputs.length; i++) {
+      var el = lenInputs[i];
+      var val = parseInt(el.value)
+      if (val != -1 && !isNaN(val)) { // isNaN, wow this is great.
+        return true;
+      }
+    }
+    return false;
+  }
+
+
 }
 
 function AutoFill() {
 	let v = table.rows.length-1;
+
+  document.getElementById("BuildGraphBtn").disabled = false;
 
 	for(let i = 1; i < v+1; i += 1) {
 		for(let j = i+1; j < v+1; j += 1) {
