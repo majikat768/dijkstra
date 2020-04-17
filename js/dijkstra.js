@@ -134,10 +134,14 @@ function CheckEdges() {
 	for(let neighborID in current.edges) {
 		ColorCell(graph.GetNode(neighborID),"cyan");
 		logger.do("checking neighbor node " + neighborID);
+//ROB dist ← dist[u] + length(u, v)
 		let dist = distances[current.id] + current.edges[neighborID];
 		logger.do("total distance from node " + start.id + " to node " + neighborID + " is " + dist);
 		// if new found distances is shorter,
 		// update it's distance and add it to the queue.
+//ROB if dist < dist[v]:
+//ROB dist[v] ← dist
+//ROB prev[v] ← u 
 		if(dist < distances[neighborID] ) {
       if (distances[neighborID] != Infinity) logger.do("distance found has lower value, updating distance from " + start.id + " to " + neighborID)
 			let cellNo = parseInt(neighborID)+parseInt(1);
