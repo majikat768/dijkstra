@@ -24,8 +24,5 @@ a.afooter {
 } 
 
 .tab {
-  margin-left: 40px;
-}
-span.tab {
-	margin-left: 40px;
+  margin-left: 2em;
 }
