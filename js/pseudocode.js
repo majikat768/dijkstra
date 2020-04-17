@@ -13,7 +13,7 @@ function PushText(text)
 /*
 Causes the [a-b] lines to be displayed or not next time UpdateText is called, display can be set to true or false
 */
-function DisplayRange(a,b,display)
+function DisplayRange(a,b,isDisplayed)
 {
     //Silently handle out of bounds errors by reseting to edge, a<=b is assumed
     if(a < 0) a = 0;
@@ -22,9 +22,29 @@ function DisplayRange(a,b,display)
     for(let i = a; i<=b;i+=1)
     {
         console.log("Displaying:"+i);
-        DisplayLines[i] = display;
+        DisplayLines[i] = isDisplayed;
     }
     console.log(DisplayLines);
+}
+/*
+Causes the [a-b] lines to be displayed or not next time UpdateText is called, display can be set to true or false
+*/
+function DisplayRange2(n)
+{
+    document.getElementById("codeList").innerHTML = "";
+    for(let i = 0; i<12;i+=1)
+    {
+        DisplayLines[i] = false;
+    }
+    //Silently handle out of bounds errors by reseting to edge, a<=b is assumed
+    for(let i = 0; i<=n;i+=1)
+    {
+        console.log("Displaying:"+i);
+        DisplayLines[i] = true;
+        document.getElementById("codeList").innerHTML += PseudocodeText[i];
+
+    }
+    UpdateVar();
 }
 /*
 Updates text displayed at the bottom of screen with the lines in PseudocodeText that have the same
@@ -34,7 +54,7 @@ function UpdateText()
 {
     //document.getElementById("codeList").innerHTML = textA.join("");
     //reset html area to clear
-    document.getElementById("codeList").innerHTML = " ";
+    document.getElementById("codeList").innerHTML = "";
     for(let i = 0; i<PseudocodeText.length;i+=1)
     {
         if(DisplayLines[i] === true)
@@ -85,21 +105,24 @@ function PopText()
 {
     CodeTextArr.pop();
 }
-
+var counter = 0;
 function PushTest()
 {
     var testInput = document.getElementById("testText").value;
     SetVar("vUpper",testInput);
     SetVar("vLower",testInput);
     SetVar("n",testInput);
-    UpdateVar();
+    counter += 1;
+    DisplayRange2(counter%12);
+
 }
 function PopTest()
 {
-    PopText();
+    counter -= 2;
+    DisplayRange2(counter%12);
 }
 function Test1()
 {
-    DisplayRange(0,7,true);
+    DisplayRange2(0,11,true);
     UpdateText();
 }
