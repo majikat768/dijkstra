@@ -1,4 +1,4 @@
-var PseudocodeText = ["<p><span style=\"color: #0000ff;\">function<\/span> <span style=\"color: #ff0000;\">Dijkstra<\/span>(<span style=\"color: #33cccc;\">Graph<\/span>, <span style=\"color: #33cccc;\">source<\/span>):",
+var PseudocodeText = ["<p><span style=\"color: #0000ff;\">function<\/span> <span style=\"color: #ff0000;\">Dijkstra<\/span><span id=\"testS\"><\/span>(<span style=\"color: #33cccc;\">Graph<\/span>, <span style=\"color: #33cccc;\">source<\/span>):",
 "<br \/>&nbsp;&nbsp;&nbsp;create a vertex queue <span style=\"color: #33cccc;\">Q<\/span>",
 "<br \/> &nbsp;&nbsp;&nbsp;<span style=\"color: #ff00ff;\">for<\/span> each vertex <span style=\"color: #33cccc;\">v<\/span> in <span style=\"color: #33cccc;\">Graph<\/span>:",
 "<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[<span style=\"color: #33cccc;\">v<\/span>] &larr; &infin;",

@@ -47,7 +47,7 @@ function PopText()
 function PushTest()
 {
     var testInput = document.getElementById("testText").value;
-    PushText(testInput);
+    document.getElementById("testS").innerHTML = testInput;
 }
 function PopTest()
 {
