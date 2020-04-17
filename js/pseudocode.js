@@ -21,8 +21,10 @@ function DisplayRange(a,b,display)
 
     for(let i = a; i<=b;i+=1)
     {
+        console.log("Displaying:"+i);
         DisplayLines[i] = display;
     }
+    console.log(DisplayLines);
 }
 /*
 Updates text displayed at the bottom of screen with the lines in PseudocodeText that have the same
@@ -48,14 +50,19 @@ updates all the variables throughout the code
 function UpdateVar()
 {
     for(var key in VarDict) {
+        console.log("Key:"+key);
         let result = VarDict[key][0];
+        console.log("Result:"+result);
         let inner = VarDict[key][1];
+        console.log("Inner:"+inner);
         for(let i = 0; i<inner.length;i++){
           let lineNum = inner[i][0];
           let lineID = inner[i][1];
+          console.log("LineNo:"+lineNum+" LineID:"+lineID);
           //if the line is being shown, update the relevent variable at that location
           if(DisplayLines[lineNum])
           {
+            console.log("DisplayLine:"+DisplayLines[lineNum]);
             document.getElementById(lineID).innerHTML = result;
             console.log("Updated variable:"+key+"at"+lineID+"with the value"+result);
           }
@@ -82,7 +89,9 @@ function PopText()
 function PushTest()
 {
     var testInput = document.getElementById("testText").value;
+    SetVar("vUpper",testInput);
     SetVar("vLower",testInput);
+    SetVar("n",testInput);
     UpdateVar();
 }
 function PopTest()
@@ -91,6 +100,6 @@ function PopTest()
 }
 function Test1()
 {
-    DisplayRange(0,11,true);
+    DisplayRange(0,7,true);
     UpdateText();
 }
