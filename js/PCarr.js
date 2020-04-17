@@ -1,0 +1,12 @@
+var textA = ["<p><span style=\"color: #0000ff;\">function<\/span> <span style=\"color: #ff0000;\">Dijkstra<\/span>(<span style=\"color: #33cccc;\">Graph<\/span>, <span style=\"color: #33cccc;\">source<\/span>):",
+"<br \/>&nbsp;&nbsp;&nbsp;create a vertex queue <span style=\"color: #33cccc;\">Q<\/span>",
+"<br \/> &nbsp;&nbsp;&nbsp;<span style=\"color: #ff00ff;\">for<\/span> each vertex <span style=\"color: #33cccc;\">v<\/span> in <span style=\"color: #33cccc;\">Graph<\/span>:",
+"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[<span style=\"color: #33cccc;\">v<\/span>] &larr; &infin;",
+"<br \/> &nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">Q<\/span>.<span style=\"color: #ff0000;\">enqueue<\/span>(<span style=\"color: #33cccc;\">source<\/span>)",
+"<br \/> &nbsp;&nbsp;&nbsp;<span style=\"color: #ff00ff;\">while<\/span> <span style=\"color: #33cccc;\">Q<\/span> is not empty:",
+"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">v<\/span> &larr; <span style=\"color: #33cccc;\">Q<\/span>.<span style=\"color: #ff0000;\">dequeue<\/span>()",
+"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #ff00ff;\">for<\/span> each neighbor <span style=\"color: #33cccc;\">n<\/span> of <span style=\"color: #33cccc;\">v<\/span>:",
+"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">dist<\/span> &larr; distance[<span style=\"color: #33cccc;\">v<\/span>] + <span style=\"color: #ff0000;\">length<\/span>(<span style=\"color: #33cccc;\">v<\/span>,<span style=\"color: #33cccc;\">n<\/span>)",
+"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #ff00ff;\">if<\/span> <span style=\"color: #33cccc;\">dist<\/span> &lt; distance[<span style=\"color: #33cccc;\">n<\/span>]:",
+"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[<span style=\"color: #33cccc;\">n<\/span>] &larr; <span style=\"color: #33cccc;\">dist<\/span>",
+"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">Q<\/span>.<span style=\"color: #ff0000;\">enqueue<\/span>(<span style=\"color: #33cccc;\">n<\/span>)<\/p>"];
