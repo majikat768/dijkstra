@@ -233,7 +233,7 @@ function Queue() {
 				if(node.id != this.set[i].id) {
 					logger.do("added node " + node.id + " to queue at index " + i);
 					this.set.splice(i,0,node);
-					document.getElementById("queueTable").insertRow(i+1).insertCell(0).innerHTML = node.id;
+					document.getElementById("queueTable").rows[0].insertCell(i+1).innerHTML = node.id;
 				}
 				added = true;
 				break;
@@ -242,7 +242,7 @@ function Queue() {
 		if(!added) {
 			logger.do("added node " + node.id + " to end of queue");
 			this.set.push(node);
-			document.getElementById("queueTable").insertRow(this.set.length).insertCell(0).innerHTML = node.id;
+			document.getElementById("queueTable").rows[0].insertCell(this.set.length).innerHTML = node.id;
 		}
 	}
 
@@ -250,7 +250,7 @@ function Queue() {
 		for(let i = 0; i < this.set.length; i += 1) {
 			if(node.id == this.set[i].id) {
 				this.set.splice(i,1);
-				document.getElementById("queueTable").deleteRow(i+1);
+				document.getElementById("queueTable").rows[0].deleteCell(i+1);
 				return;
 			}
 		}
@@ -258,7 +258,7 @@ function Queue() {
 
 	this.pop = function() {
 		logger.do("popping node " + this.set[0].id + " from queue");
-		document.getElementById("queueTable").deleteRow(1);
+		document.getElementById("queueTable").rows[0].deleteCell(1);
 		return this.set.shift();
 	}
 

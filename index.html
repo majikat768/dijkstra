@@ -62,8 +62,9 @@
     <input type="submit" onclick="CheckEdge()" value="Check edges" id="EdgeChecker" style="display:none;">
     <input type="submit" onclick="TakeStep()" value="continue" id="ContinueButton" style="display:none;">
     starting at vertex <span id="startvert"></span>.
-    <div id="CurrentNodeStatus"></div>
-    <div id="EdgesStatus"></div>
+    <div id="CurrentNodeStatus">Current node:</div>
+    <div id="EdgesStatus">Edges:</div>
+    <table id="queueTable" cellpadding=5 border=0></table>
     <!--
     <p>
     Choose ending vertex.
@@ -75,15 +76,13 @@
     <div id="step5" style='display:none;'>
     ending at vertex <span id="endvert"></span>.
     </div>
-    <table id="solutionTable" style="display:none;">
+    <table id="solutionTable" style="display:none;float:left;" cellpadding="10">
     <tr>
     <td>
     <table id="pathTable" cellpadding=5 border=1>
     </table>
     </td>
-    <td>
-    <table id="queueTable" cellpadding=5 border=1></table>
-    </td>
+	<td id="codeList"></td>
     </table>
     </div>
     <!--    Section of code for psudocode-->
@@ -94,8 +93,6 @@
         <input type="submit" onclick="PopTest()" value="pop">
     </p>
   -->
-    <div id="codeList" style = "display:block">
-    </div>
   </div>
   <div>
     <div id="sketch-container">
