@@ -43,8 +43,6 @@ function init() {
     msg3: document.querySelector(".canvas-msg-3"),
 	msg4: document.querySelector(".canvas-msg-4")
   });
-  PushText("testing<br>again :)");
-  UpdateText();
   display.draw();
   var summary = document.getElementById("summary").innerText;
   sayIt(summary);
