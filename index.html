@@ -10,6 +10,8 @@
   <script type="text/javascript" src="js/graph.js"></script>
   <script type="text/javascript" src="js/dijkstra.js"></script>
   <script type="text/javascript"  src="js/main.js"></script>
+  <script type="text/javascript"  src="js/pseudocode.js"></script>
+  <script type="text/javascript"  src="js/PCarr.js"></script>
   <link rel='stylesheet' href='css/main.css' type='text/css' />
 </head>
 <body onload="init()">
@@ -36,8 +38,8 @@
     </select>
     <input id="SetNumberOfVerticesBtn" type="submit" onclick="SetNumberVertices(document.getElementById('numVertices').value)">
     </p>
-    
-    
+
+
     <div id="step2" style='display:none;'>
     <p>
     Enter edge lengths.
@@ -48,7 +50,7 @@
     <br><input id="AutoFillBtn" type="submit" onclick="AutoFill()" value='Auto fill'></input>
     <br><input id="BuildGraphBtn" disabled type="submit" onclick="BuildGraph()" value='continue'></input>
     </div>
-    
+
     <div id="step3" style='display:none;'>
     <p>Choose a starting vertex or click on one to the right.
     <br><select id="ChooseStart"></select>
@@ -60,8 +62,9 @@
     <input type="submit" onclick="CheckEdge()" value="Check edges" id="EdgeChecker" style="display:none;">
     <input type="submit" onclick="TakeStep()" value="continue" id="ContinueButton" style="display:none;">
     starting at vertex <span id="startvert"></span>.
-    <div id="CurrentNodeStatus"></div>
-    <div id="EdgesStatus"></div>
+    <div id="CurrentNodeStatus">Current node:</div>
+    <div id="EdgesStatus">Edges:</div>
+    <table id="queueTable" cellpadding=5 border=0></table>
     <!--
     <p>
     Choose ending vertex.
@@ -73,19 +76,26 @@
     <div id="step5" style='display:none;'>
     ending at vertex <span id="endvert"></span>.
     </div>
-    <table id="solutionTable" style="display:none;">
-    <tr>
-    <td>
-    <table id="queueTable" cellpadding=5 border=0 padding=1></table>
-    </td>
-	</tr>
-	<tr>
-    <td>
-    <table id="pathTable" cellpadding=5 border=1></table>
-    </td>
-	</tr>
+    <table id="solutionTable" style="display:none;float:left;" cellpadding="30">
+		<tr>
+			<td height=100%>
+				<table id="pathTable" cellpadding=5 border=1>
+				</table>
+			</td>
+			<td height=100% valign="top">
+				<div id="codeList"></div>
+			</td>
+		</tr>
     </table>
     </div>
+    <!--    Section of code for psudocode-->
+    <!--<p>
+        <input type="submit" onclick="Test1()" value="Test">
+        <input type="text" id="testText" size="20" name="test">
+        <input type="submit" onclick="PushTest()" value="push">
+        <input type="submit" onclick="PopTest()" value="pop">
+    </p>
+  -->
   </div>
   <div>
     <div id="sketch-container">
