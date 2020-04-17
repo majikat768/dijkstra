@@ -12,25 +12,34 @@ let currentEdges = [];
 // then two functions are called by user through button click:
 // GetNextNode(), and CheckEdge().
 function dijkstra(s) {
+	AddPseudocode("dijkstra(start):");
 	start = s;
 	pathTable = document.getElementById("pathTable");
 	// queue is a sorted list of nodes with path discovered,
 	// but haven't yet checked their neighbors yet.
 	queue = new Queue();
+
+AddPseudocode("Q = new queue()<br>",margin=2);
 	logger.do("starting at node " + start.id);
 
+	AddPseudocode("For node in graph:",margin=2);
 	// set distance of every vertex to Infinity.
 	for(let i = 0; i < graph.nodes.length; i += 1) {
 		let n = graph.nodes[i];
+		AddPseudocode("distance(node "+n.id+") = Infinity",margin=4);
 		distances[n.id] = Infinity;
 		pathTable.rows[i+1].cells[1].innerText = Infinity;
 	}
-	//set distance of start vertex to zero, 
+	//set distance of start vertex to zero,
 	// and add it to queue of known distances.
+	AddPseudocode("");
+	AddPseudocode("distance(start) = 0",margin=2);
 	distances[start.id] = 0;
 
 	pathTable.rows[start.id+1].cells[1].innerText = 0;
 	pathTable.rows[start.id+1].cells[2].innerText = start.id;
+	AddPseudocode("queue.push(start)<br>",margin=2);
+	AddPseudocode("while queue.length > 0:",margin=2);
 	queue.push(start);
 
 	queue.print();
@@ -92,6 +101,10 @@ function GetNextNode() {
   display.drawConsideredEdge();
 	document.getElementById("CurrentNodeStatus").innerHTML = "Current node: " + current.id;
 	document.getElementById("EdgesStatus").innerHTML = "Edges:";
+	AddPseudocode("current = queue.pop()",margin=4);
+	AddPseudocode("//current node: " + current.id,margin=4);
+	AddPseudocode("//distance(current): " + distances[current.id] + "<br>",margin=4)
+	AddPseudocode("for node in current.neighbors:",margin=4);
 }
 
 function ResetColors() {
@@ -104,15 +117,23 @@ function ResetColors() {
 
 function CheckEdge() {
 	let neighborID = currentEdges.shift();
+	AddPseudocode("// neighbor node: " + neighborID,margin=6);
 	document.getElementById("EdgesStatus").innerHTML += ", " + neighborID;
 	ColorCell(graph.GetNode(neighborID),"cyan");
 	logger.do("checking neighbor node " + neighborID);
 	let dist = distances[current.id] + current.edges[neighborID];
+	AddPseudocode("//edgeLength(current,neighbor): " + current.edges[neighborID],margin=6);
+	AddPseudocode("NewDistance = distance(current) + edgeLength(current,neighbor)",margin=6);
+	AddPseudocode("// NewDistance: " + dist,margin=6);
+	AddPseudocode("// CurrentDistance: " + distances[neighborID],margin=6);
 	logger.do("total distance from node " + start.id + " to node " + neighborID + " is " + dist);
   display.drawConsideredEdge(current.id, neighborID)
 	// if new found distances is shorter,
 	// update it's distance and add it to the queue.
 	if(dist < distances[neighborID] ) {
+		AddPseudocode("NewDistance < CurrentDistance == true:",margin=6);
+		AddPseudocode("CurrentDistance = NewDistance == " + dist,margin=8);
+		AddPseudocode("queue.push(neighbor)",margin=8);
     if (distances[neighborID] != Infinity) logger.do("distance found has lower value, updating distance from " + start.id + " to " + neighborID)
 		let cellNo = parseInt(neighborID)+parseInt(1);
 		pathTable.rows[cellNo].cells[1].innerText = dist;
@@ -120,6 +141,10 @@ function CheckEdge() {
 		distances[neighborID] = dist;
 		queue.push(graph.GetNode(neighborID));
 	}
+	else {
+		AddPseudocode("NewDistance < CurrentDistance == false",margin=6);
+	}
+	AddPseudocode("");
 	if(currentEdges.length <= 0) {
 		document.getElementById("QueuePopper").style.display = "block";
 		document.getElementById("EdgeChecker").style.display = "none";

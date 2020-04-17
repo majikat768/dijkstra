@@ -36,8 +36,8 @@
     </select>
     <input id="SetNumberOfVerticesBtn" type="submit" onclick="SetNumberVertices(document.getElementById('numVertices').value)">
     </p>
-    
-    
+
+
     <div id="step2" style='display:none;'>
     <p>
     Enter edge lengths.
@@ -48,7 +48,7 @@
     <br><input id="AutoFillBtn" type="submit" onclick="AutoFill()" value='Auto fill'></input>
     <br><input id="BuildGraphBtn" disabled type="submit" onclick="BuildGraph()" value='continue'></input>
     </div>
-    
+
     <div id="step3" style='display:none;'>
     <p>Choose a starting vertex or click on one to the right.
     <br><select id="ChooseStart"></select>
@@ -85,14 +85,51 @@
     </table>
     </div>
   </div>
-  <div>
-    <div id="sketch-container">
-      <div id=sketch></div>
-      <h1 class='canvas-msg canvas-msg-1'>Chose a number of vertices.</h1>
-      <h1 class='canvas-msg canvas-msg-2'>Enter edge values.</h1>
-      <h2 class='canvas-msg canvas-top-msg canvas-msg-3'>Click a node to set as Start Node.</h2>
-      <h2 class='canvas-msg canvas-top-msg canvas-msg-4'>Click a node to set as End Node.</h2>
-    </div>
+
+  <div id="step3" style='display:none;'>
+  <p>Choose a starting vertex or click on one to the right.
+  <br><select id="ChooseStart"></select>
+  <br><input type="submit" onclick="SetStartingVertex(document.getElementById('ChooseStart').value)">
+  </p>
+  </div>
+  <div id="step4" style='display:none;'>
+  <input type="submit" onclick="GetNextNode()" value="Pop next node" id="QueuePopper" style="display:none;">
+  <input type="submit" onclick="CheckEdge()" value="Check edges" id="EdgeChecker" style="display:none;">
+  <input type="submit" onclick="TakeStep()" value="continue" id="ContinueButton" style="display:none;">
+  starting at vertex <span id="startvert"></span>.
+  <div id="CurrentNodeStatus"></div>
+  <div id="EdgesStatus"></div>
+  <!--
+  <p>
+  Choose ending vertex.
+  <br><select id="ChooseEnd"></select>
+  <br><input type="submit" onclick="SetEndingVertex(document.getElementById('ChooseEnd').value)">
+  </p>
+  -->
+  </div>
+  <div id="step5" style='display:none;'>
+  ending at vertex <span id="endvert"></span>.
+  </div>
+  <table id="solutionTable" style="display:none;">
+  <tr>
+  <td>
+  <table id="pathTable" cellpadding=5 border=1>
+  </table>
+  </td>
+  <td>
+  <table id="queueTable" cellpadding=5 border=1></table>
+  </td>
+  </table>
+  <div id="pseudocode">
+	<h3>Pseudocode:</h1>
+  </div>
+  </div>
+  <div id="sketch-container">
+    <div id=sketch></div>
+    <h1 class='canvas-msg canvas-msg-1'>Chose a number of vertices.</h1>
+    <h1 class='canvas-msg canvas-msg-2'>Enter edge values.</h1>
+    <h2 class='canvas-msg canvas-top-msg canvas-msg-3'>Click a node to set as Start Node.</h2>
+    <h2 class='canvas-msg canvas-top-msg canvas-msg-4'>Click a node to set as End Node.</h2>
   </div>
 </main>
 </body>

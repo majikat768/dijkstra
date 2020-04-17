@@ -205,3 +205,12 @@ function SetEndingVertex(end) {
   display.endNode(node);
 	let d = dijkstra(node);
 }
+
+function AddPseudocode(str,margin=0) {
+	var codeblock = document.getElementById("pseudocode");
+console.log(str);
+	if(str.slice(0,2) == "//") {
+		str = "<i>" + str + "</i>";
+	}
+    codeblock.innerHTML += "<br><span style=\"display:inline;margin:" + margin + "em;\">" + str + "</span>";
+}
