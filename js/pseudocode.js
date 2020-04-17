@@ -11,7 +11,7 @@ function PushText(text)
     CodeTextArr.push(text);
 }
 /*
-Causes the [a-b] lines to be displayed or not next time UpdateText is called
+Causes the [a-b] lines to be displayed or not next time UpdateText is called, display can be set to true or false
 */
 function DisplayRange(a,b,display)
 {

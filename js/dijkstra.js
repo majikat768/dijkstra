@@ -18,12 +18,16 @@ function dijkstra(s) {
 	// but haven't yet checked their neighbors yet.
 	queue = new Queue();
 	logger.do("starting at node " + start.id);
-
+	//Display funcs
+	DisplayRange(0,5,1);
+	UpdateText();
 	// set distance of every vertex to Infinity.
 	for(let i = 0; i < graph.nodes.length; i += 1) {
 		let n = graph.nodes[i];
 		distances[n.id] = Infinity;
 		pathTable.rows[i+1].cells[1].innerText = Infinity;
+		SetVar("vUpper",i);
+		UpdateVar();
 	}
 	//set distance of start vertex to zero, 
 	// and add it to queue of known distances.
@@ -82,6 +86,11 @@ function GetNextNode() {
 	if(current != null)
 		ColorCell(current,"white");
 	current = queue.pop();
+	//Display funcs
+	DisplayRange(6,6,1);
+	SetVar("vLower",current);
+	UpdateText();
+
 	ColorCell(current,"gold");
 	document.getElementById("QueuePopper").style.display = "none";
 	document.getElementById("EdgeChecker").style.display = "block";
@@ -89,6 +98,9 @@ function GetNextNode() {
 	for(let id in current.edges) {
 		currentEdges.push(id);
 	}
+	//Display funcs
+	DisplayRange(7,7,1);
+	UpdateText();
   display.drawConsideredEdge();
 	document.getElementById("CurrentNodeStatus").innerHTML = "Current node: " + current.id;
 	document.getElementById("EdgesStatus").innerHTML = "Edges:";
@@ -103,13 +115,24 @@ function ResetColors() {
 }
 
 function CheckEdge() {
+	//Display funcs
+	DisplayRange(8,11,0);
+	SetVar("vUpper",current);
+	UpdateText();
 	let neighborID = currentEdges.shift();
 	document.getElementById("EdgesStatus").innerHTML += ", " + neighborID;
 	ColorCell(graph.GetNode(neighborID),"cyan");
 	logger.do("checking neighbor node " + neighborID);
+	//Display funcs
+	DisplayRange(8,8,1);
+	SetVar("n",neighbordID);
+	UpdateText();
 	let dist = distances[current.id] + current.edges[neighborID];
 	logger.do("total distance from node " + start.id + " to node " + neighborID + " is " + dist);
   display.drawConsideredEdge(current.id, neighborID)
+  	//Display funcs
+	DisplayRange(9,9,1);
+	UpdateText();
 	// if new found distances is shorter,
 	// update it's distance and add it to the queue.
 	if(dist < distances[neighborID] ) {
@@ -118,6 +141,10 @@ function CheckEdge() {
 		pathTable.rows[cellNo].cells[1].innerText = dist;
 		pathTable.rows[cellNo].cells[2].innerText = pathTable.rows[current.id+1].cells[2].innerText + "," + neighborID;
 		distances[neighborID] = dist;
+		//Display funcs
+		DisplayRange(10,11,1);
+		//SetVar("vUpper",current);
+		UpdateText();
 		queue.push(graph.GetNode(neighborID));
 	}
 	if(currentEdges.length <= 0) {
