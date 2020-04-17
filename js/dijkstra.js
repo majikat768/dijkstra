@@ -34,7 +34,7 @@ function dijkstra(s) {
 	queue.push(start);
 
 	queue.print();
-
+	DisplayRange(4);
 	let iterations = 0;
 
 	/*
@@ -76,7 +76,11 @@ function GetNextNode() {
 		display.drawConsideredEdge();
 		document.getElementById("EdgesStatus").innerHTML = "";
 		document.getElementById("QueuePopper").style.display = "none";
-		document.getElementById("EdgeChecker").style.display = "none";
+		document.getElementById("EdgeChecker").style.display = "none"; 
+		SetVar("vLower","");
+		SetVar("n","");
+		SetVar("dist","");
+		DisplayRange(11);
 		return;
 	}
 	if(current != null)
@@ -89,6 +93,10 @@ function GetNextNode() {
 	for(let id in current.edges) {
 		currentEdges.push(id);
 	}
+	//displayfunc
+	SetVar("vLower",current.id);
+	DisplayRange(6);
+
   display.drawConsideredEdge();
 	document.getElementById("CurrentNodeStatus").innerHTML = "Current node: " + current.id;
 	document.getElementById("EdgesStatus").innerHTML = "Edges:";
@@ -103,13 +111,22 @@ function ResetColors() {
 }
 
 function CheckEdge() {
+	//displayfunc
+	DisplayRange(7);
 	let neighborID = currentEdges.shift();
 	document.getElementById("EdgesStatus").innerHTML += ", " + neighborID;
 	ColorCell(graph.GetNode(neighborID),"cyan");
 	logger.do("checking neighbor node " + neighborID);
 	let dist = distances[current.id] + current.edges[neighborID];
+	//displayfunc
+	SetVar("n",neighborID);
+	SetVar("dist",dist);
+	DisplayRange(8);
+
 	logger.do("total distance from node " + start.id + " to node " + neighborID + " is " + dist);
   display.drawConsideredEdge(current.id, neighborID)
+	//displayfunc
+  	DisplayRange(9);
 	// if new found distances is shorter,
 	// update it's distance and add it to the queue.
 	if(dist < distances[neighborID] ) {
@@ -119,6 +136,8 @@ function CheckEdge() {
 		pathTable.rows[cellNo].cells[2].innerText = pathTable.rows[current.id+1].cells[2].innerText + "," + neighborID;
 		distances[neighborID] = dist;
 		queue.push(graph.GetNode(neighborID));
+		//displayfunc
+		DisplayRange(11);
 	}
 	if(currentEdges.length <= 0) {
 		document.getElementById("QueuePopper").style.display = "block";

@@ -1,7 +1,7 @@
 var PseudocodeText = ["<p><span style=\"color: #0000ff;\">function<\/span> <span style=\"color: #ff0000;\">Dijkstra<\/span>(<span style=\"color: #33cccc;\">Graph<\/span>, <span style=\"color: #33cccc;\">source<\/span>):",
 "<br \/>&nbsp;&nbsp;&nbsp;create a vertex queue <span style=\"color: #33cccc;\">Q<\/span>",
 "<br \/> &nbsp;&nbsp;&nbsp;<span style=\"color: #ff00ff;\">for<\/span> each vertex <span style=\"color: #33cccc;\">v<\/span> in <span style=\"color: #33cccc;\">Graph<\/span>:",
-"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[<span style=\"color: #33cccc;\">v\{<span id=\"PSid1\"><\/span>\}<\/span>] &larr; &infin;",
+"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[<span style=\"color: #33cccc;\">v<span id=\"PSid1\"><\/span><\/span>] &larr; &infin;",
 "<br \/> &nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">Q<\/span>.<span style=\"color: #ff0000;\">enqueue<\/span>(<span style=\"color: #33cccc;\">source<\/span>)",
 "<br \/> &nbsp;&nbsp;&nbsp;<span style=\"color: #ff00ff;\">while<\/span> <span style=\"color: #33cccc;\">Q<\/span> is not empty:",
 "<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">v\{<span id=\"PSid2\"><\/span>\}<\/span> &larr; <span style=\"color: #33cccc;\">Q<\/span>.<span style=\"color: #ff0000;\">dequeue<\/span>()",
@@ -12,7 +12,7 @@ var PseudocodeText = ["<p><span style=\"color: #0000ff;\">function<\/span> <span
 "<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">Q<\/span>.<span style=\"color: #ff0000;\">enqueue<\/span>(<span style=\"color: #33cccc;\">n\{<span id=\"PSid9\"><\/span>\}<\/span>)<\/p>"];
 
 var VarDict = {
-    vUpper:["vU",[[3,"PSid1"]]],
+    vUpper:["",[[3,"PSid1"]]],
    vLower:["vL",[[6,"PSid2"],[7,"PSid3"],[8,"PSid4"],[8,"PSid5"]]],
    n:["n",[[8,"PSid6"],[9,"PSid7"],[10,"PSid8"],[11,"PSid9"]]],
    dist:["",[[8,"PSid10"],[9,"PSid11"],[10,"PSid12"]]]
