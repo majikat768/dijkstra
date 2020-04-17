@@ -1,4 +1,4 @@
-var PseudocodeText = ["<p><span style=\"color: #0000ff;\">function<\/span> <span style=\"color: #ff0000;\">Dijkstra<\/span>(<span style=\"color: #33cccc;\">Graph<\/span>, <span style=\"color: #33cccc;\">source<\/span>):",
+var PseudocodeText = ["<span style=\"color: #0000ff;\">function<\/span> <span style=\"color: #ff0000;\">Dijkstra<\/span>(<span style=\"color: #33cccc;\">Graph<\/span>, <span style=\"color: #33cccc;\">source<\/span>):",
 "<br \/>&nbsp;&nbsp;&nbsp;create a vertex queue <span style=\"color: #33cccc;\">Q<\/span>",
 "<br \/> &nbsp;&nbsp;&nbsp;<span style=\"color: #ff00ff;\">for<\/span> each vertex <span style=\"color: #33cccc;\">v<\/span> in <span style=\"color: #33cccc;\">Graph<\/span>:",
 "<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[<span style=\"color: #33cccc;\">v<span id=\"PSid1\"><\/span><\/span>] &larr; &infin;",
@@ -9,7 +9,7 @@ var PseudocodeText = ["<p><span style=\"color: #0000ff;\">function<\/span> <span
 "<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">dist\{<span id=\"PSid10\"><\/span>\}<\/span> &larr; distance[<span style=\"color: #33cccc;\">v\{<span id=\"PSid4\"><\/span>\}<\/span>] + <span style=\"color: #ff0000;\">length<\/span>(<span style=\"color: #33cccc;\">v\{<span id=\"PSid5\"><\/span>\}<\/span>,<span style=\"color: #33cccc;\">n\{<span id=\"PSid6\"><\/span>\}<\/span>)",
 "<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #ff00ff;\">if<\/span> <span style=\"color: #33cccc;\">dist\{<span id=\"PSid11\"><\/span>\}<\/span> &lt; distance[<span style=\"color: #33cccc;\">n\{<span id=\"PSid7\"><\/span>\}<\/span>]:",
 "<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;distance[<span style=\"color: #33cccc;\">n\{<span id=\"PSid8\"><\/span>\}<\/span>] &larr; <span style=\"color: #33cccc;\">dist\{<span id=\"PSid12\"><\/span>\}<\/span>",
-"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">Q<\/span>.<span style=\"color: #ff0000;\">enqueue<\/span>(<span style=\"color: #33cccc;\">n\{<span id=\"PSid9\"><\/span>\}<\/span>)<\/p>"];
+"<br \/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style=\"color: #33cccc;\">Q<\/span>.<span style=\"color: #ff0000;\">enqueue<\/span>(<span style=\"color: #33cccc;\">n\{<span id=\"PSid9\"><\/span>\}<\/span>)"];
 
 var VarDict = {
     vUpper:["",[[3,"PSid1"]]],

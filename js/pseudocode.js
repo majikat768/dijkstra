@@ -31,7 +31,7 @@ Causes the [a-b] lines to be displayed or not next time UpdateText is called, di
 */
 function DisplayRange(n)
 {
-    document.getElementById("codeList").innerHTML = "";
+    document.getElementById("codeList").innerHTML = "<p>";
     for(let i = 0; i<12;i+=1)
     {
         DisplayLines[i] = false;
@@ -44,6 +44,7 @@ function DisplayRange(n)
         document.getElementById("codeList").innerHTML += PseudocodeText[i];
 
     }
+    document.getElementById("codeList").innerHTML += "<\/p>";
     UpdateVar();
 }
 /*
