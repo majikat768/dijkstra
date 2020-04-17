@@ -36,7 +36,7 @@ function init() {
 
 	graph = new Graph();
 
-  display = new Display({ 
+  display = new Display({
     container: document.getElementById("sketch"),
     msg1: document.querySelector(".canvas-msg-1"),
     msg2: document.querySelector(".canvas-msg-2"),
@@ -108,13 +108,13 @@ function SetNumberVertices(v) {
 
   var lenInputs = document.querySelectorAll(".edgeLen");
   for (var i = 0; i < lenInputs.length; i++) {
-    (function(el) { 
+    (function(el) {
       el.addEventListener('change', onChange);
       el.addEventListener('input', onChange);
     })(lenInputs[i]);
   }
 
-  function onChange(event) { 
+  function onChange(event) {
     console.log("here");
     document.getElementById("BuildGraphBtn").disabled = !hasAnyValue();
   }

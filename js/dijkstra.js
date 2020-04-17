@@ -82,7 +82,9 @@ function GetNextNode() {
 	ResetColors();
 	if(queue.length() <= 0)	{
 		document.getElementById("CurrentNodeStatus").innerHTML = "done!";
-		display.drawConsideredEdge();
+		document.getElementById("QueuePopper").style.display = "none";
+		document.getElementById("EdgeChecker").style.display = "none";
+		AddPseudocode("return",margin=2);
 		document.getElementById("EdgesStatus").innerHTML = "";
 		document.getElementById("QueuePopper").style.display = "none";
 		document.getElementById("EdgeChecker").style.display = "none";
@@ -131,8 +133,8 @@ function CheckEdge() {
 	// if new found distances is shorter,
 	// update it's distance and add it to the queue.
 	if(dist < distances[neighborID] ) {
-		AddPseudocode("NewDistance < CurrentDistance == true:",margin=6);
-		AddPseudocode("CurrentDistance = NewDistance == " + dist,margin=8);
+		AddPseudocode("NewDistance < distance(neighbor) == true:",margin=6);
+		AddPseudocode("distance(neighbor) = NewDistance == " + dist,margin=8);
 		AddPseudocode("queue.push(neighbor)",margin=8);
     if (distances[neighborID] != Infinity) logger.do("distance found has lower value, updating distance from " + start.id + " to " + neighborID)
 		let cellNo = parseInt(neighborID)+parseInt(1);

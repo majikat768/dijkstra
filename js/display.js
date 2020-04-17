@@ -31,10 +31,10 @@ function shuffle(array) {
 
 // IMPL.
 
-class Display { 
+class Display {
 
   constructor({ container, msg1, msg2, msg3, msg4 }) {
-    this.state = { 
+    this.state = {
       el: void 0,
       nodes: [],
       lines: {},
@@ -51,9 +51,9 @@ class Display {
 
     this.props = {
       container,
-      msg1, 
+      msg1,
       msg2,
-      msg3, 
+      msg3,
       msg4
     }
 
@@ -78,7 +78,7 @@ class Display {
     }
 
     if (!this.state.userTargetNode) {
-      this.state.nodes = []; 
+      this.state.nodes = [];
     }
 
     this.state.lines = {};
@@ -93,7 +93,7 @@ class Display {
     this.props.msg4.style.display = 'none';
   }
 
-  _randomColor(){ 
+  _randomColor(){
     return this.state.colors.pop();
   }
 
@@ -101,7 +101,7 @@ class Display {
     for (let item of this.state.nodes) {
       let node = item.n;
       if (node.id == id) {
-        return { 
+        return {
           x: item.x,
           y: item.y,
         }
@@ -147,7 +147,7 @@ class Display {
     }
   }
 
-  _onMouseMove(event) { 
+  _onMouseMove(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -163,7 +163,7 @@ class Display {
     }
   }
 
-  _onMouseDown(event) { 
+  _onMouseDown(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -192,12 +192,12 @@ class Display {
     }
 
     clearTimeout(this.state.mouseTimeout);
-    this.state.mouseTimeout = setTimeout(() => { 
+    this.state.mouseTimeout = setTimeout(() => {
       this.state.userTargetNode = targetNode;
     }, 100);
   }
 
-  _onMouseUp(event) { 
+  _onMouseUp(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -281,7 +281,7 @@ class Display {
       list.push(arg.toString()) // Because sometimes these are strings and sometime not.
     }
     this.state.winningPath = list;
-    this.state.userTargetNode = { n: { id: -1 } } // Fake it. 
+    this.state.userTargetNode = { n: { id: -1 } } // Fake it.
     this.draw({ graph: this.state.currentGraph });
     this.state.userTargetNode = void 0;
   }
@@ -357,7 +357,7 @@ class Display {
     let el = document.createElement("canvas");
     this.props.container.appendChild(el);
     this.state.el = el;
-    
+
     let ctx = el.getContext("2d");
     let width = ctx.canvas.height = this.props.container.offsetHeight;
     let height = ctx.canvas.width = this.props.container.offsetWidth;
@@ -381,13 +381,13 @@ class Display {
     }
     this.props.msg2.style.display = 'none';
 
-    // Create nodes. 
+    // Create nodes.
     if (this.state.userTargetNode) {
       // We're currently dragging a node, that means don't redraw the world,
       // just update our single node.
       for (let i = 0; i < this.state.nodes.length; i++) {
         let n = this.state.nodes[i]
-        if (n.n.id == this.state.userTargetNode.n.id) { 
+        if (n.n.id == this.state.userTargetNode.n.id) {
           this.state.nodes[i].x = this.state.userMouseDown.x;
           this.state.nodes[i].y = this.state.userMouseDown.y;
         }
@@ -427,7 +427,7 @@ class Display {
         }
 
         if (!this.state.lines[n.id][id]) {
-          // Draw the line! It's currently not on screen. 
+          // Draw the line! It's currently not on screen.
           this.state.lines[n.id][id] = true; // Don't draw the same line twice.
           this.state.lines[id][n.id] = true;
 
@@ -465,7 +465,7 @@ class Display {
       ctx.font = `${canvasNode.r * 0.5}px Arial`;
       ctx.fillText(canvasNode.n.id, canvasNode.x-offset, canvasNode.y+offset);
 
-      if ((this.state.startNode && canvasNode.n.id.toString() == this.state.startNode.id.toString()) || 
+      if ((this.state.startNode && canvasNode.n.id.toString() == this.state.startNode.id.toString()) ||
           /* (this.state.endNode && canvasNode.n.id.toString() == this.state.endNode.id.toString()) */
           false ) {
         // Border.
