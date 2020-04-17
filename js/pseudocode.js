@@ -13,7 +13,7 @@ function PushText(text)
 /*
 Causes the [a-b] lines to be displayed or not next time UpdateText is called, display can be set to true or false
 */
-function DisplayRange(a,b,isDisplayed)
+function DisplayRange2(a,b,isDisplayed)
 {
     //Silently handle out of bounds errors by reseting to edge, a<=b is assumed
     if(a < 0) a = 0;
@@ -29,7 +29,7 @@ function DisplayRange(a,b,isDisplayed)
 /*
 Causes the [a-b] lines to be displayed or not next time UpdateText is called, display can be set to true or false
 */
-function DisplayRange2(n)
+function DisplayRange(n)
 {
     document.getElementById("codeList").innerHTML = "";
     for(let i = 0; i<12;i+=1)
@@ -113,16 +113,16 @@ function PushTest()
     SetVar("vLower",testInput);
     SetVar("n",testInput);
     counter += 1;
-    DisplayRange2(counter%12);
+    DisplayRange(counter%12);
 
 }
 function PopTest()
 {
     counter -= 2;
-    DisplayRange2(counter%12);
+    DisplayRange(counter%12);
 }
 function Test1()
 {
-    DisplayRange2(0,11,true);
+    DisplayRange(0,11,true);
     UpdateText();
 }
