@@ -4,6 +4,8 @@ var countA = 0;
 
 //stores which lines are displayed in the psudocode text
 var DisplayLines = [false,false,false,false,false,false,false,false,false,false,false,false];
+//stores which variable is on which line and which id
+
 function PushText(text) 
 {
     CodeTextArr.push(text);
@@ -38,6 +40,39 @@ function UpdateText()
             document.getElementById("codeList").innerHTML += PseudocodeText[i];
         }
     }
+    UpdateVar();
+}
+/*
+updates all the variables throughout the code
+*/
+function UpdateVar()
+{
+    for(var key in VarDict) {
+        let result = VarDict[key][0];
+        let inner = VarDict[key][1];
+        for(let i = 0; i<inner.length;i++){
+          let lineNum = inner[i][0];
+          let lineID = inner[i][1];
+          //if the line is being shown, update the relevent variable at that location
+          if(DisplayLines[lineNum])
+          {
+            document.getElementById(lineID).innerHTML = result;
+            console.log("Updated variable:"+key+"at"+lineID+"with the value"+result);
+          }
+
+        }
+      }
+}
+/*
+Sets the variable with its given value
+vUpper,
+vLower,
+n
+*/
+function SetVar(varname,value)
+{
+    console.log("Updated "+varname+"with the value"+value);
+    VarDict[varname][0] = value;
 }
 function PopText()
 {
@@ -47,7 +82,8 @@ function PopText()
 function PushTest()
 {
     var testInput = document.getElementById("testText").value;
-    document.getElementById("testS").innerHTML = testInput;
+    SetVar("vLower",testInput);
+    UpdateVar();
 }
 function PopTest()
 {
